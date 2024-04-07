@@ -1,7 +1,10 @@
 import { Task } from "../models/task.interface";
 
+export type MetricAttribute = "date" | "tags" | "title" | "time";
+
 export interface OverallMetrics extends Metrics {
   totalAttributes: number;
+  attributeWeights: Record<MetricAttribute, number>;
 }
 
 export interface Metrics {
@@ -9,6 +12,13 @@ export interface Metrics {
   recall: number;
   f1Score: number;
 }
+
+const attributeWeights: Record<MetricAttribute, number> = {
+  date: 3, // Highest weight
+  time: 3, // Highest weight (combining fromTime and toTime)
+  tags: 2, // High weight
+  title: 1, // Default weight
+};
 
 function matchTasksByTitleSimilarity(
   aiResponse: Task[],
@@ -136,24 +146,31 @@ export function calculateMetrics(
   aiResponse: Task[],
   expectedResponse: Task[],
   attributes: ("date" | "tags" | "title" | "time")[]
-): Record<string, Metrics> {
-  const metrics: Record<string, Metrics> = {};
+): Record<MetricAttribute, Metrics> {
+  const metrics: Record<MetricAttribute, Metrics> = {
+    date: { precision: 0, recall: 0, f1Score: 0 },
+    tags: { precision: 0, recall: 0, f1Score: 0 },
+    title: { precision: 0, recall: 0, f1Score: 0 },
+    time: { precision: 0, recall: 0, f1Score: 0 },
+  };
+  let totalWeights = 0;
 
-  // Match tasks based on title similarity
+  // Match tasks based on title similarity to pair them for comparison
   const matchedPairs = matchTasksByTitleSimilarity(
     aiResponse,
     expectedResponse
   );
 
   attributes.forEach((attribute) => {
-    let totalPrecision = 0;
-    let totalRecall = 0;
-    let totalF1Score = 0;
+    let weightedPrecision = 0;
+    let weightedRecall = 0;
+    let weightedF1Score = 0;
+    const weight = attributeWeights[attribute];
 
-    // @ts-ignore
     matchedPairs.forEach(([aiTask, expectedTask]) => {
       let attributeMetrics: Metrics;
 
+      // Calculate metrics based on the attribute type
       switch (attribute) {
         case "date":
           attributeMetrics = calculateDateMetricForTaskPair(
@@ -183,22 +200,21 @@ export function calculateMetrics(
           throw new Error(`Unknown attribute: ${attribute}`);
       }
 
-      // Aggregate metrics for the current attribute
-      totalPrecision += attributeMetrics.precision;
-      totalRecall += attributeMetrics.recall;
-      totalF1Score += attributeMetrics.f1Score;
+      // Accumulate weighted metrics
+      weightedPrecision += attributeMetrics.precision * weight;
+      weightedRecall += attributeMetrics.recall * weight;
+      weightedF1Score += attributeMetrics.f1Score * weight;
     });
 
-    // Calculate average metrics for the current attribute across all matched pairs
-    const avgPrecision = totalPrecision / matchedPairs.length;
-    const avgRecall = totalRecall / matchedPairs.length;
-    const avgF1Score = totalF1Score / matchedPairs.length;
+    // Compute the total weight applied across all matched pairs for the attribute
+    const totalAttributeWeight = weight * matchedPairs.length;
+    totalWeights += totalAttributeWeight; // Accumulate total weight for overall metrics calculation
 
     // Assign averaged metrics to the corresponding attribute
     metrics[attribute] = {
-      precision: avgPrecision,
-      recall: avgRecall,
-      f1Score: avgF1Score,
+      precision: weightedPrecision / totalAttributeWeight,
+      recall: weightedRecall / totalAttributeWeight,
+      f1Score: weightedF1Score / totalAttributeWeight,
     };
   });
 
@@ -206,31 +222,32 @@ export function calculateMetrics(
 }
 
 export function calculateOverallMetrics(
-  metrics: Record<string, Metrics>
+  metrics: Record<MetricAttribute, Metrics>
 ): OverallMetrics {
   let totalPrecision = 0;
   let totalRecall = 0;
   let totalF1Score = 0;
-  let attributesCounted = 0;
+  let totalAttributeWeights = 0;
 
-  Object.values(metrics).forEach((metric) => {
-    totalPrecision += metric.precision;
-    totalRecall += metric.recall;
-    totalF1Score += metric.f1Score;
-    attributesCounted++;
+  // Sum the metrics across all attributes, taking into account their weights
+  // @ts-ignore
+  Object.keys(metrics).forEach((attribute: MetricAttribute) => {
+    const weight = attributeWeights[attribute];
+    const attributeMetrics = metrics[attribute];
+    const attributeWeight = weight; // For simplicity, assuming 1 matched pair per attribute
+
+    totalPrecision += attributeMetrics.precision * attributeWeight;
+    totalRecall += attributeMetrics.recall * attributeWeight;
+    totalF1Score += attributeMetrics.f1Score * attributeWeight;
+    totalAttributeWeights += attributeWeight;
   });
 
-  // Calculate averages
-  const avgPrecision =
-    attributesCounted > 0 ? totalPrecision / attributesCounted : 0;
-  const avgRecall = attributesCounted > 0 ? totalRecall / attributesCounted : 0;
-  const avgF1Score =
-    attributesCounted > 0 ? totalF1Score / attributesCounted : 0;
-
+  // Calculate overall metrics as weighted averages
   return {
-    precision: avgPrecision,
-    recall: avgRecall,
-    f1Score: avgF1Score,
-    totalAttributes: attributesCounted,
+    precision: totalPrecision / totalAttributeWeights,
+    recall: totalRecall / totalAttributeWeights,
+    f1Score: totalF1Score / totalAttributeWeights,
+    totalAttributes: Object.keys(metrics).length,
+    attributeWeights,
   };
 }
