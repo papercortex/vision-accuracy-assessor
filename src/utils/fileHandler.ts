@@ -50,6 +50,14 @@ async function readExpectedJsonForImage(
   }
 }
 
+function addPlaceholdersToContext(context: string) {
+  const currentDate = new Date().toISOString().split("T")[0];
+  if (!currentDate) {
+    throw new Error("Failed to get the current date.");
+  }
+  return context.replaceAll("{{currentDate}}", currentDate);
+}
+
 async function readContextForImage(imagePath: string) {
   const parentDir = path.dirname(imagePath);
   const grandParentDir = path.dirname(parentDir);
@@ -58,7 +66,7 @@ async function readContextForImage(imagePath: string) {
     path.join(grandParentDir, "context"),
     "utf-8"
   );
-  return `${grandParentCtx}\n${parentCtx}`;
+  return [grandParentCtx, parentCtx].map(addPlaceholdersToContext).join("\n");
 }
 
 async function storeAiAnalysisForImage(

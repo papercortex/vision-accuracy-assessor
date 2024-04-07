@@ -1,0 +1,65 @@
+[
+  {
+    "title": "Run",
+    "date": "2024-03-03",
+    "fromTime": "07:00",
+    "toTime": "08:00",
+    "tags": ["Health"]
+  },
+  {
+    "title": "Slide Draft",
+    "date": "2024-03-03",
+    "fromTime": "09:00",
+    "toTime": "10:00",
+    "tags": ["PaperCortex YT"],
+    "subTasks": []
+  },
+  {
+    "title": "Script Research",
+    "date": "2024-03-03",
+    "fromTime": "14:00",
+    "toTime": "16:00",
+    "tags": ["PaperCortex YT"],
+    "subTasks": []
+  },
+  {
+    "title": "Brainstorming & Planning Day",
+    "date": "2024-03-03",
+    "fromTime": "08:00",
+    "toTime": "09:00",
+    "tags": [],
+    "subTasks": []
+  },
+  {
+    "title": "Dinner with Family",
+    "date": "2024-03-03",
+    "fromTime": "17:00",
+    "toTime": "21:00",
+    "tags": [],
+    "subTasks": []
+  },
+  {
+    "title": "Learning",
+    "date": "2024-03-03",
+    "fromTime": "21:00",
+    "toTime": "22:00",
+    "tags": ["KodeKloud"],
+    "subTasks": []
+  },
+  {
+    "title": "Grooming Meeting",
+    "date": "2024-03-03",
+    "fromTime": "11:00",
+    "toTime": "12:00",
+    "tags": ["KESC"],
+    "subTasks": []
+  },
+  {
+    "title": "Backlog Refining",
+    "date": "2024-03-03",
+    "fromTime": "12:00",
+    "toTime": "13:00",
+    "tags": ["KESC"],
+    "subTasks": []
+  }
+]
