@@ -1,0 +1,24 @@
+# Requirements
+
+Use your reasoning and make fair assumptions to create a JSON tasks array following this schema:
+
+```js
+const taskSchema = {
+  type: "object",
+  properties: {
+    title: { type: "string" },
+    date: { type: "string", format: "date" }, // e.g. 2022-12-27
+    fromTime: { type: "string" }, // e.g. 08:45
+    toTime: { type: "string" },
+    tags: { type: "array", items: { type: "string" } },
+    subTasks: { type: "array", items: { type: "string" } },
+  },
+  required: ["title"],
+  additionalProperties: false,
+};
+```
+
+Other Rules for interpretation:
+
+- If time conflicts, use sub tasks.
+- Tags are the text between brackets if exists only

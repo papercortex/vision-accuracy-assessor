@@ -1,0 +1,21 @@
+# Who Is Writing Daily Plan
+
+I'm Kareem, I'm a software engineer. I have a son (Younes) and a daugther (Roqyia) and my wife is Asmaa.
+
+I'm currently working on:
+
+- SRE Learning on KodeKloud
+- PaperCortex POC
+- PaperCortex POC Youtube Series
+
+## PaperCortex Idea
+
+**Objective:** To transform handwritten notes into structured, digital formats using AI vision models.
+**Core Technology:** Utilizes GPT-4 vision to accurately interpret and digitize handwritten content.
+
+### POC Features:
+
+- Conversion of handwritten daily tasks into a digital format.
+- Dynamic web interface for real-time interaction with digitized tasks.
+- Calendar view for task scheduling and management.
+- Analytics and insights on user productivity and task completion.
