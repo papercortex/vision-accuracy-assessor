@@ -1,0 +1,58 @@
+[
+  {
+    "title": "Exercise",
+    "date": "2024-03-02",
+    "fromTime": "07:00",
+    "toTime": "08:00",
+    "tags": [],
+    "subTasks": []
+  },
+  {
+    "title": "YT Part 2",
+    "date": "2024-03-02",
+    "fromTime": "08:00",
+    "toTime": "10:00",
+    "tags": ["PaperCortex"],
+    "subTasks": ["Brainstorm", "Slide Draft"]
+  },
+  {
+    "title": "Popup Animations",
+    "date": "2024-03-02",
+    "fromTime": "10:00",
+    "toTime": "14:00",
+    "tags": ["Presenter"],
+    "subTasks": []
+  },
+  {
+    "title": "YT Part 2 - Slide Finale",
+    "date": "2024-03-02",
+    "fromTime": "14:00",
+    "toTime": "16:00",
+    "tags": ["PaperCortex"],
+    "subTasks": []
+  },
+  {
+    "title": "Younes",
+    "date": "2024-03-02",
+    "fromTime": "16:00",
+    "toTime": "17:00",
+    "tags": [],
+    "subTasks": []
+  },
+  {
+    "title": "Dinner",
+    "date": "2024-03-02",
+    "fromTime": "17:00",
+    "toTime": "18:00",
+    "tags": [],
+    "subTasks": []
+  },
+  {
+    "title": "YT Part 2 - Script Draft",
+    "date": "2024-03-02",
+    "fromTime": "18:00",
+    "toTime": "20:00",
+    "tags": ["PaperCortex"],
+    "subTasks": []
+  }
+]

@@ -8,7 +8,7 @@ import {
 } from "../utils/fileHandler";
 import path from "path";
 import { transformImageToJSON } from "../api/vision/openai";
-import { storeDebugObject } from "../utils/debug";
+import { loadDebugObject, storeDebugObject } from "../utils/debug";
 import {
   calculateMetrics,
   calculateOverallMetrics,
@@ -19,6 +19,8 @@ import { logger } from "../logger"; // Import the logger
 interface Arguments {
   samples: string[];
   samplesGroup: string;
+  onlyMetrics: boolean;
+  skipAiAnalysis: boolean;
 }
 
 const argv = yargs(hideBin(process.argv))
@@ -35,6 +37,16 @@ const argv = yargs(hideBin(process.argv))
     demandOption: true,
     array: true,
   })
+  .option("only-metrics", {
+    describe: "Only calculate metrics for the samples",
+    type: "boolean",
+    default: false,
+  })
+  .option("skip-ai-analysis", {
+    describe: "Skip AI analysis for the samples",
+    type: "boolean",
+    default: false,
+  })
   .help("h")
   .alias("h", "help")
   .parse();
@@ -50,8 +62,17 @@ async function processSamples(args: Arguments) {
 
     const aiResult = await images.reduce(async (previousPromise, image) => {
       const prevResult = await previousPromise;
+
       logger.debug({ image }, "Processing image");
       const imageName = path.basename(image);
+
+      if (args.onlyMetrics) {
+        return {
+          ...prevResult,
+          [imageName]: await loadDebugObject(imageName),
+        };
+      }
+
       const context = await readContextForImage(image);
       logger.debug({ context }, "Image context read");
 
@@ -99,6 +120,11 @@ async function processSamples(args: Arguments) {
       };
     }, Promise.resolve({}));
     logger.info("Metrics calculation completed");
+
+    if (args.skipAiAnalysis) {
+      logger.info("Skipping AI analysis");
+      return;
+    }
 
     logger.info("Analyzing calculated metrics with AI");
     for (const image of images) {

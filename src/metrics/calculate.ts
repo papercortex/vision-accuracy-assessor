@@ -10,48 +10,37 @@ export interface Metrics {
   f1Score: number;
 }
 
-function calculateDateMetrics(
+function matchTasksByTitleSimilarity(
   aiResponse: Task[],
   expectedResponse: Task[]
-): Metrics {
-  const correctMatches = aiResponse.filter(
-    (aiTask, index) => aiTask.date === expectedResponse[index]?.date
-  ).length;
-  const precision = correctMatches / aiResponse.length;
-  const recall = correctMatches / expectedResponse.length;
-  const f1Score = (2 * (precision * recall)) / (precision + recall) || 0; // Avoid division by zero
+): [Task, Task][] {
+  const matchedPairs: [Task, Task][] = [];
 
-  return { precision, recall, f1Score };
-}
+  expectedResponse.forEach((expectedTask) => {
+    let bestMatch: Task | null = null;
+    let highestSimilarity = 0;
 
-function calculateTagsMetrics(
-  aiResponse: Task[],
-  expectedResponse: Task[]
-): Metrics {
-  // Assuming a simple presence check for each tag in the expected response
-  let correctMatches = 0;
-  let totalExpectedTags = 0;
+    aiResponse.forEach((aiTask) => {
+      const similarity = calculateTitleSimilarity(
+        aiTask.title,
+        expectedTask.title
+      );
+      if (similarity > highestSimilarity) {
+        highestSimilarity = similarity;
+        bestMatch = aiTask;
+      }
+    });
 
-  aiResponse.forEach((aiTask, index) => {
-    const expectedTags = expectedResponse[index]?.tags || [];
-    totalExpectedTags += expectedTags.length;
-    const matchingTags = aiTask.tags.filter((tag) =>
-      expectedTags.includes(tag)
-    ).length;
-    correctMatches += matchingTags;
+    if (bestMatch) {
+      matchedPairs.push([bestMatch, expectedTask]);
+    }
   });
 
-  const precision =
-    correctMatches /
-    aiResponse.reduce((acc, curr) => acc + curr.tags.length, 0);
-  const recall = correctMatches / totalExpectedTags;
-  const f1Score = (2 * (precision * recall)) / (precision + recall) || 0; // Avoid division by zero
-
-  return { precision, recall, f1Score };
+  return matchedPairs;
 }
 
 // Simple similarity measure for titles (could be replaced with a more sophisticated algorithm)
-export function calculateTitleSimilarity(
+function calculateTitleSimilarity(
   aiTitle: string,
   expectedTitle: string
 ): number {
@@ -62,54 +51,83 @@ export function calculateTitleSimilarity(
   return similarity; // Returns a value between 0 and 1
 }
 
-function calculateTitleMetrics(
-  aiResponse: Task[],
-  expectedResponse: Task[]
+function calculateDateMetricForTaskPair(
+  aiTask: Task,
+  expectedTask: Task
 ): Metrics {
-  let totalSimilarity = 0;
-  let totalPossible = expectedResponse.length; // Assuming every expectedResponse has a title
-
-  aiResponse.forEach((aiTask, index) => {
-    const expectedTask = expectedResponse[index];
-    // Calculate similarity for each title pair
-    const similarity = calculateTitleSimilarity(
-      aiTask.title,
-      expectedTask?.title || ""
-    );
-    totalSimilarity += similarity; // Sum up all similarities
-  });
-
-  // Precision and recall are conceptually tricky in this context. Assuming each title has a chance to be correct (1 point)
-  // and our similarity score approximates "correctness," we can use the total similarity as a proxy for correct identifications.
-  const precision = totalSimilarity / aiResponse.length; // How precise the AI titles are on average
-  const recall = totalSimilarity / totalPossible; // How many of the expected titles were "covered" by the AI
-  const f1Score = (2 * (precision * recall)) / (precision + recall) || 0; // Harmonic mean, or 0 if either is 0
+  const precision = aiTask.date === expectedTask.date ? 1 : 0;
+  const recall = expectedTask.date !== "" ? precision : 1; // If there's an expected date, recall depends on precision; otherwise, it's perfect by default.
+  const f1Score = (2 * precision * recall) / (precision + recall) || 0; // Avoid division by zero
 
   return { precision, recall, f1Score };
 }
 
-function calculateTimeMetrics(
-  aiResponse: Task[],
-  expectedResponse: Task[]
+function calculateTagsMetricForTaskPair(
+  aiTask: Task,
+  expectedTask: Task
 ): Metrics {
-  let correctMatches = 0; // Count of exactly matched times
+  // Convert tags to sets for unordered comparison
+  const aiTagsSet = new Set(aiTask.tags);
+  const expectedTagsSet = new Set(expectedTask.tags);
 
-  aiResponse.forEach((aiTask, index) => {
-    const expectedTask = expectedResponse[index];
-    // Check both fromTime and toTime for an exact match
-    const fromTimeMatch = aiTask.fromTime === expectedTask?.fromTime ? 1 : 0;
-    const toTimeMatch = aiTask.toTime === expectedTask?.toTime ? 1 : 0;
-    correctMatches += fromTimeMatch + toTimeMatch; // Each correct time counts as a match
-  });
+  // Calculate matching tags by intersecting the sets
+  const matchingTagsCount = [...expectedTagsSet].filter((tag) =>
+    aiTagsSet.has(tag)
+  ).length;
+  const totalExpectedTags = expectedTagsSet.size;
+  const totalAiTags = aiTagsSet.size;
 
-  // Since we're counting both fromTime and toTime, adjust total identifications and total possible matches accordingly
-  const totalIdentifications = aiResponse.length * 2; // Each task has two time fields
-  const totalPossibleMatches = expectedResponse.length * 2; // Each expected task has two correct time fields
+  if (totalExpectedTags === 0 && totalAiTags === 0) {
+    // If both sets are empty, consider the match perfect
+    return { precision: 1, recall: 1, f1Score: 1 };
+  }
 
-  // Calculate precision and recall
-  const precision = correctMatches / totalIdentifications;
-  const recall = correctMatches / totalPossibleMatches;
-  const f1Score = (2 * (precision * recall)) / (precision + recall) || 0; // Harmonic mean, or 0 if either is 0
+  // Precision and recall calculations are based on the size of the sets
+  const precision = totalAiTags > 0 ? matchingTagsCount / totalAiTags : 0; // How many of AI's tags were correct
+  const recall =
+    totalExpectedTags > 0 ? matchingTagsCount / totalExpectedTags : 0; // How many of the expected tags were found in AI's tags
+
+  // Calculate F1 score, which is the harmonic mean of precision and recall
+  const f1Score =
+    precision + recall > 0
+      ? (2 * precision * recall) / (precision + recall)
+      : 0;
+
+  return { precision, recall, f1Score };
+}
+
+function calculateTimeMetricForTaskPair(
+  aiTask: Task,
+  expectedTask: Task
+): Metrics {
+  const fromTimeMatch = aiTask.fromTime === expectedTask.fromTime ? 1 : 0;
+  const toTimeMatch = aiTask.toTime === expectedTask.toTime ? 1 : 0;
+  const correctMatches = fromTimeMatch + toTimeMatch;
+  const precision = correctMatches / 2; // Since there are two time points (from and to)
+  const recall = expectedTask.fromTime && expectedTask.toTime ? precision : 1; // If expected times are provided, recall matches precision; otherwise, it's perfect.
+  const f1Score = (2 * precision * recall) / (precision + recall) || 0;
+
+  return { precision, recall, f1Score };
+}
+
+function calculateTitleMetricForTaskPair(
+  aiTask: Task,
+  expectedTask: Task
+): Metrics {
+  // Assuming calculateTitleSimilarity returns a value between 0 (no match) and 1 (perfect match)
+  const titleSimilarity = calculateTitleSimilarity(
+    aiTask.title,
+    expectedTask.title
+  );
+
+  // Here, precision and recall concepts are a bit merged due to the direct comparison nature.
+  // Since we're evaluating a similarity score, consider both precision and recall as equal to the similarity score.
+  // This reflects the idea that our "correctness" in title matching is directly tied to how similar the titles are.
+  const precision = titleSimilarity; // How precise our title match is.
+  const recall = titleSimilarity; // How well we are capturing the expected title's essence.
+
+  // Calculate F1 Score based on precision and recall. In this context, it's essentially reaffirming the similarity score.
+  const f1Score = (2 * precision * recall) / (precision + recall) || 0;
 
   return { precision, recall, f1Score };
 }
@@ -117,27 +135,71 @@ function calculateTimeMetrics(
 export function calculateMetrics(
   aiResponse: Task[],
   expectedResponse: Task[],
-  attributes: ("date" | "tags" | "title" | "time" | "subtasks")[]
+  attributes: ("date" | "tags" | "title" | "time")[]
 ): Record<string, Metrics> {
   const metrics: Record<string, Metrics> = {};
 
+  // Match tasks based on title similarity
+  const matchedPairs = matchTasksByTitleSimilarity(
+    aiResponse,
+    expectedResponse
+  );
+
   attributes.forEach((attribute) => {
-    switch (attribute) {
-      case "date":
-        metrics.date = calculateDateMetrics(aiResponse, expectedResponse);
-        break;
-      case "tags":
-        metrics.tags = calculateTagsMetrics(aiResponse, expectedResponse);
-        break;
-      case "title":
-        metrics.title = calculateTitleMetrics(aiResponse, expectedResponse);
-        break;
-      case "time":
-        metrics.time = calculateTimeMetrics(aiResponse, expectedResponse);
-        break;
-      default:
-        throw new Error(`Unknown attribute: ${attribute}`);
-    }
+    let totalPrecision = 0;
+    let totalRecall = 0;
+    let totalF1Score = 0;
+
+    // @ts-ignore
+    matchedPairs.forEach(([aiTask, expectedTask]) => {
+      let attributeMetrics: Metrics;
+
+      switch (attribute) {
+        case "date":
+          attributeMetrics = calculateDateMetricForTaskPair(
+            aiTask,
+            expectedTask
+          );
+          break;
+        case "tags":
+          attributeMetrics = calculateTagsMetricForTaskPair(
+            aiTask,
+            expectedTask
+          );
+          break;
+        case "title":
+          attributeMetrics = calculateTitleMetricForTaskPair(
+            aiTask,
+            expectedTask
+          );
+          break;
+        case "time":
+          attributeMetrics = calculateTimeMetricForTaskPair(
+            aiTask,
+            expectedTask
+          );
+          break;
+        default:
+          throw new Error(`Unknown attribute: ${attribute}`);
+      }
+
+      // Aggregate metrics for the current attribute
+      totalPrecision += attributeMetrics.precision;
+      totalRecall += attributeMetrics.recall;
+      totalF1Score += attributeMetrics.f1Score;
+    });
+
+    // Calculate average metrics for the current attribute across all matched pairs
+    const avgPrecision = totalPrecision / matchedPairs.length;
+    const avgRecall = totalRecall / matchedPairs.length;
+    const avgF1Score = totalF1Score / matchedPairs.length;
+
+    // Assign averaged metrics to the corresponding attribute
+    metrics[attribute] = {
+      precision: avgPrecision,
+      recall: avgRecall,
+      f1Score: avgF1Score,
+    };
   });
 
   return metrics;

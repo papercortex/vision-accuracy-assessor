@@ -76,7 +76,7 @@ async function storeAiAnalysisForImage(
   const analysisPath = imagePath
     .replace(/\.(jpg|jpeg|png|gif)$/i, `_${fileTs}.md`)
     .replace("samples", "ai_analysis");
-  const fullAnalysis = `# AI Analysis for ${imageName}\n\n## Metrics\n\n\`\`\`json\n${JSON.stringify(
+  const fullAnalysis = `# Analysis for ${imageName}\n\n## Metrics\n\n\`\`\`json\n${JSON.stringify(
     metrics,
     null,
     2

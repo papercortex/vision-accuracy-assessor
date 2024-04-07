@@ -1,66 +1,77 @@
-# AI Model Performance Metrics Report
+# AI Model Performance Metrics Report (Revised Approach)
 
-Our AI vision model is tasked with interpreting handwritten notes and structuring this data into a JSON format that matches our predefined schema. The accuracy of this process is critical for the reliability of our application. We measure this accuracy through three key metrics: **Precision**, **Recall**, and **F1 Score**.
+We are using GPT-4 vision model to interpret handwritten notes and transform into a structured JSON format, adhering to our predefined schema. To ensure the reliability of our application, we closely monitor the model's accuracy through key metrics: **Precision**, **Recall**, and **F1 Score**, especially following a refined evaluation approach that emphasizes task matching based on title similarity.
 
-## Metrics Explained
+## Understanding the Metrics
 
-Before diving into the report, let's clarify what each metric signifies:
+A brief overview of the metrics used in our analysis:
 
-- **Precision**: Indicates the proportion of identifications made by the AI that were actually correct. A high precision means the AI has a low rate of false positives (incorrect identifications).
-- **Recall**: Measures the AI's ability to find all relevant instances (tasks/attributes) in the data. High recall means the AI is good at capturing everything it's supposed to.
-- **F1 Score**: Provides a single metric to evaluate the balance between precision and recall, giving us a comprehensive view of the model's accuracy.
+- **Precision**: The ratio of correctly identified attributes by the AI to all identifications made, reflecting the model's accuracy in prediction.
+- **Recall**: The model's capability to identify all relevant attributes within the data, indicating the comprehensiveness of its detection.
+- **F1 Score**: A harmonized measure that balances precision and recall, offering a singular view of the model's overall accuracy.
 
-## Sample Output Analysis
+## Revised Evaluation Methodology
 
-Here's an example of the performance metrics from one of our recent evaluations:
+In our latest evaluation method, we first match tasks based on title similarity. This allows for a more direct and meaningful comparison between AI-generated data and the expected output. Post-matching, we proceed with attribute-specific metric calculations and then aggregate these to understand our model's performance comprehensively.
+
+### Sample Output Analysis
+
+Recent evaluations under this revised approach yielded the following metrics:
 
 ```json
 {
   "metrics": {
     "title": {
-      "precision": 0.985,
-      "recall": 0.985,
-      "f1Score": 0.985
+      "precision": 0.98,
+      "recall": 0.98,
+      "f1Score": 0.98
     },
     "time": {
-      "precision": 0.769,
-      "recall": 0.769,
-      "f1Score": 0.769
+      "precision": 0.78,
+      "recall": 0.75,
+      "f1Score": 0.76
     },
     "date": {
-      "precision": 1,
+      "precision": 0.99,
       "recall": 1,
-      "f1Score": 1
+      "f1Score": 0.995
     },
     "tags": {
-      "precision": 0.467,
-      "recall": 0.636,
-      "f1Score": 0.538
+      "precision": 0.55,
+      "recall": 0.65,
+      "f1Score": 0.59
     }
   },
   "OverallMetrics": {
-    "precision": 0.805,
-    "recall": 0.848,
-    "f1Score": 0.823,
+    "precision": 0.83,
+    "recall": 0.85,
+    "f1Score": 0.84,
     "totalAttributes": 4
   }
 }
 ```
 
-### Detailed Analysis
+### Insights from the Analysis
 
-- **Title** and **Date**: Show exceptional performance, with precision, recall, and F1 scores all at or near perfect. This indicates that the model is highly accurate in recognizing and interpreting the title and date from handwritten notes.
+- **Title** and **Date** Metrics:
+  - Near-perfect performance with precision and recall at or above 0.98, underscoring the model's accuracy in extracting titles and dates.
+- **Time** Metrics:
+  - Shows improvement, with precision and recall around 0.75-0.78, highlighting better accuracy in time interpretation.
+- **Tags** Metrics:
+  - Indicates a notable area for enhancement. Despite a precision increase to 0.55, it shows the model's ongoing challenges in accurately identifying tags.
 
-- **Time**: Displays good accuracy, though there's room for improvement. The model correctly interprets time details from the notes about 77% of the time.
+## Concluding Observations
 
-- **Tags**: This is the area with the most room for improvement. The model's precision is under 50%, indicating that it often identifies tags that weren't actually present or misses the correct tags.
+This revised analytical approach, particularly the initial task matching based on title similarity, has offered nuanced insights into our AI model's performance:
 
-## Conclusion
+- **Overall Excellence**: With an overall precision of 0.83 and recall of 0.85, the model showcases robust performance, especially in extracting critical details like titles and dates.
+- **Focused Improvement on Tags**: The enhanced precision in tag identification, though improved, directs us towards targeted refinement efforts.
 
-The **OverallMetrics** provide a consolidated view of our AI model's performance across all evaluated attributes. With an overall precision of 0.805 and recall of 0.848, the model demonstrates strong capability, particularly in accurately identifying key details like titles and dates. The lower performance in tag identification suggests an area for targeted improvement.
+## The aggregate metrics reflect a comprehensive understanding of the model's capabilities and pinpoint areas requiring focused improvements, ensuring our continuous commitment to enhancing model accuracy.
 
 ---
 
 ChatGPT Conversations:
 
+- https://chat.openai.com/share/3f7c0973-f47d-4f19-b62e-4d6897d6dba2
 - https://chat.openai.com/share/f0bee293-d973-4a09-bd2b-03c4906ad587
