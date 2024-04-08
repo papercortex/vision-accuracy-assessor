@@ -1,12 +1,12 @@
-import { Metrics } from "../../models/metric.interface";
+import { PerformanceMetrics } from "../../models/metric.interface";
 import { Task } from "../../models/task.interface";
-import { calculateAdjustedMetrics } from "../utils";
+import { calculateAdjustedMetrics } from "../calculateAdjustedMetrics";
 
 export function calculateTimeMetricForTaskPair(
   aiTask: Task,
   expectedTask: Task,
   timeAttribute: "fromTime" | "toTime" // Specify which time attribute to compare
-): Metrics {
+): PerformanceMetrics {
   // Check for missing or invalid expected time attribute
   if (!expectedTask[timeAttribute]) {
     throw new Error(`Expected task has no '${timeAttribute}'.`);
@@ -41,13 +41,13 @@ export function calculateTimeMetricForTaskPair(
 export function calculateFromTimeMetricForTaskPair(
   aiTask: Task,
   expectedTask: Task
-): Metrics {
+): PerformanceMetrics {
   return calculateTimeMetricForTaskPair(aiTask, expectedTask, "fromTime");
 }
 
 export function calculateToTimeMetricForTaskPair(
   aiTask: Task,
   expectedTask: Task
-): Metrics {
+): PerformanceMetrics {
   return calculateTimeMetricForTaskPair(aiTask, expectedTask, "toTime");
 }

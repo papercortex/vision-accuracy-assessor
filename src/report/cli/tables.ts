@@ -1,16 +1,13 @@
 import Table from "cli-table";
-import { RunAnalysis, SampleAnalysis } from "../../models/analysis.interface";
 import {
-  calculateAggregatedAttributesForMultipleRuns,
-  calculateOverallMetricsForMultipleRuns,
-} from "../../metrics/calculate";
+  SampleAnalysis,
+  SampleRunAnalysis,
+} from "../../models/analysis.interface";
 import { renderMetricValue } from "./utils";
 
-export function generateAggregateMetricsTable(sample: SampleAnalysis) {
-  const aggregatedAttributes = calculateAggregatedAttributesForMultipleRuns(
-    sample.runs
-  );
-
+export function generateAggregateMetricsTable<T>(
+  sampleAnalysis: SampleAnalysis<T>
+) {
   const table = new Table({
     head: [
       "Attribute",
@@ -20,24 +17,26 @@ export function generateAggregateMetricsTable(sample: SampleAnalysis) {
     ],
   });
 
-  Object.entries(aggregatedAttributes).forEach(([attribute, metrics]) => {
-    const averagePrecision = metrics.precision;
-    const averageRecall = metrics.recall;
-    const averageF1Score = metrics.f1Score;
+  Object.entries(sampleAnalysis.averageAttributeMetrics).forEach(
+    ([attribute, metrics]) => {
+      const averagePrecision = metrics.precision;
+      const averageRecall = metrics.recall;
+      const averageF1Score = metrics.f1Score;
 
-    table.push([
-      attribute,
-      renderMetricValue(averagePrecision),
-      renderMetricValue(averageRecall),
-      renderMetricValue(averageF1Score),
-    ]);
-  });
+      table.push([
+        attribute,
+        renderMetricValue(averagePrecision),
+        renderMetricValue(averageRecall),
+        renderMetricValue(averageF1Score),
+      ]);
+    }
+  );
 
   return table;
 }
 
-export function generateAggregateForMultipleSamplesTable(
-  samples: SampleAnalysis[],
+export function generateAggregateForMultipleSamplesTable<T>(
+  samples: SampleAnalysis<T>[],
   metricAttribute: "precision" | "recall" | "f1Score"
 ) {
   const table = new Table({
@@ -53,22 +52,26 @@ export function generateAggregateForMultipleSamplesTable(
     ],
   });
 
-  samples.forEach((sample) => {
-    const aggregatedAttributes = calculateAggregatedAttributesForMultipleRuns(
-      sample.runs
-    );
-
-    const overallMetrics = calculateOverallMetricsForMultipleRuns(sample.runs);
-
+  samples.forEach((sampleAnalysis) => {
     const sampleRow = [
-      sample.sample,
-      Object.keys(sample.runs).length.toString(),
-      renderMetricValue(aggregatedAttributes.title[metricAttribute]),
-      renderMetricValue(aggregatedAttributes.tags[metricAttribute]),
-      renderMetricValue(aggregatedAttributes.date[metricAttribute]),
-      renderMetricValue(aggregatedAttributes.fromTime[metricAttribute]),
-      renderMetricValue(aggregatedAttributes.toTime[metricAttribute]),
-      renderMetricValue(overallMetrics[metricAttribute]),
+      sampleAnalysis.sample,
+      Object.keys(sampleAnalysis.runs).length.toString(),
+      renderMetricValue(
+        sampleAnalysis.averageAttributeMetrics.title[metricAttribute]
+      ),
+      renderMetricValue(
+        sampleAnalysis.averageAttributeMetrics.tags[metricAttribute]
+      ),
+      renderMetricValue(
+        sampleAnalysis.averageAttributeMetrics.date[metricAttribute]
+      ),
+      renderMetricValue(
+        sampleAnalysis.averageAttributeMetrics.fromTime[metricAttribute]
+      ),
+      renderMetricValue(
+        sampleAnalysis.averageAttributeMetrics.toTime[metricAttribute]
+      ),
+      renderMetricValue(sampleAnalysis.overallWeightedMetrics[metricAttribute]),
     ];
 
     table.push(sampleRow);
@@ -77,47 +80,47 @@ export function generateAggregateForMultipleSamplesTable(
   return table;
 }
 
-export function generateOverallMetricsTable(samples: SampleAnalysis[]) {
+export function generateOverallMetricsTable<T>(samples: SampleAnalysis<T>[]) {
   const table = new Table({
     head: ["Sample", "Precision", "Recall", "F1 Score"],
   });
 
   samples.forEach((sample) => {
-    const overallMetrics = calculateOverallMetricsForMultipleRuns(sample.runs);
-
     table.push([
       sample.sample,
-      renderMetricValue(overallMetrics.precision),
-      renderMetricValue(overallMetrics.recall),
-      renderMetricValue(overallMetrics.f1Score),
+      renderMetricValue(sample.overallWeightedMetrics.precision),
+      renderMetricValue(sample.overallWeightedMetrics.recall),
+      renderMetricValue(sample.overallWeightedMetrics.f1Score),
     ]);
   });
 
   return table;
 }
 
-export function generatePerRunTable(run: RunAnalysis) {
+export function generatePerRunTable<T>(runAnalysis: SampleRunAnalysis<T>) {
   // Initialize CLI Table
   const table = new Table({
     head: ["Attribute", "Precision", "Recall", "F1 Score"],
   });
 
   // Populate the table
-  Object.entries(run.metrics).forEach(([attribute, metrics]) => {
-    table.push([
-      attribute,
-      renderMetricValue(metrics.precision),
-      renderMetricValue(metrics.recall),
-      renderMetricValue(metrics.f1Score),
-    ]);
-  });
+  Object.entries(runAnalysis.attributeMetrics).forEach(
+    ([attribute, metrics]) => {
+      table.push([
+        attribute,
+        renderMetricValue(metrics.precision),
+        renderMetricValue(metrics.recall),
+        renderMetricValue(metrics.f1Score),
+      ]);
+    }
+  );
 
   // Overall Metrics
   table.push([
     "Overall",
-    renderMetricValue(run.overallMetrics.precision),
-    renderMetricValue(run.overallMetrics.recall),
-    renderMetricValue(run.overallMetrics.f1Score),
+    renderMetricValue(runAnalysis.weightedAggregateMetrics.precision),
+    renderMetricValue(runAnalysis.weightedAggregateMetrics.recall),
+    renderMetricValue(runAnalysis.weightedAggregateMetrics.f1Score),
   ]);
 
   return table;

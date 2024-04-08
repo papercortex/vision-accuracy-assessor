@@ -1,17 +1,29 @@
-import { MetricAttribute, Metrics, OverallMetrics } from "./metric.interface";
-import { Task } from "./task.interface";
+import { MetricAttribute, PerformanceMetrics } from "./metric.interface";
 
-export interface RunAnalysis {
-  fullSamplePath: string;
-  metrics: Record<MetricAttribute, Metrics>;
-  overallMetrics: OverallMetrics;
-  prompt: string;
-  aiTasks: Task[];
-  expectedTasks: Task[];
-}
-
-export interface SampleAnalysis {
+export interface SampleRunDetails<T> {
   sample: string;
   sampleGroup: string;
-  runs: Record<string, RunAnalysis>;
+  prompt: string;
+  aiJson: T;
+}
+
+export interface SampleRunAnalysis<T> {
+  details: SampleRunDetails<T>;
+  attributeMetrics: Record<MetricAttribute, PerformanceMetrics>;
+  weightedAggregateMetrics: PerformanceMetrics;
+}
+
+export interface SampleAnalysis<T> {
+  sample: string;
+  sampleGroup: string;
+  runs: Record<string, SampleRunAnalysis<T>>;
+  averageAttributeMetrics: Record<MetricAttribute, PerformanceMetrics>;
+  overallWeightedMetrics: PerformanceMetrics;
+}
+
+export interface TestSample<T> {
+  sample: string;
+  sampleGroup: string;
+  sampleImageFullPath: string;
+  expectedJson: T | null;
 }

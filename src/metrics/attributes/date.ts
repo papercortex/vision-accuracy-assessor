@@ -1,11 +1,11 @@
-import { Metrics } from "../../models/metric.interface";
+import { PerformanceMetrics } from "../../models/metric.interface";
 import { Task } from "../../models/task.interface";
-import { calculateAdjustedMetrics } from "../utils";
+import { calculateAdjustedMetrics } from "../calculateAdjustedMetrics";
 
 export function calculateDateMetricForTaskPair(
   aiTask: Task,
   expectedTask: Task
-): Metrics {
+): PerformanceMetrics {
   if (!expectedTask.date) {
     throw new Error("Expected task has no date.");
   }

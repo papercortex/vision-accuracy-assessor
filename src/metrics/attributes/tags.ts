@@ -1,11 +1,11 @@
-import { Metrics } from "../../models/metric.interface";
+import { PerformanceMetrics } from "../../models/metric.interface";
 import { Task } from "../../models/task.interface";
-import { calculateAdjustedMetrics } from "../utils";
+import { calculateAdjustedMetrics } from "../calculateAdjustedMetrics";
 
 export function calculateTagsMetricForTaskPair(
   aiTask: Task,
   expectedTask: Task
-): Metrics {
+): PerformanceMetrics {
   // Ensure there are tags arrays to compare, even if they're empty, and normalize them
   // Make tags lowercase and remove duplicates
   const aiTags = [

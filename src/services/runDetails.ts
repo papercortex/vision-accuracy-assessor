@@ -1,14 +1,14 @@
 import fs from "fs/promises";
 import path from "path";
-import { RunAnalysis } from "../models/analysis.interface";
+import { SampleRunDetails } from "../models/analysis.interface";
 import { logger } from "../logger";
 
-const analysisDir = path.join(process.cwd(), `analysis`);
+const analysisDir = path.join(process.cwd(), `executions`);
 
-export async function storeRunAnalysisObject(
+export async function storeRunDetails<T>(
   sampleGroup: string,
   sample: string,
-  object: RunAnalysis
+  object: SampleRunDetails<T>
 ) {
   try {
     await fs.mkdir(path.join(analysisDir, sampleGroup, sample), {
@@ -25,7 +25,7 @@ export async function storeRunAnalysisObject(
   );
 }
 
-export async function removeRunAnalysisObject(
+export async function removeRunDetails(
   sampleGroup: string,
   sample: string,
   timestamp: number | string
@@ -40,11 +40,11 @@ export async function removeRunAnalysisObject(
   }
 }
 
-export async function loadRunAnalysisObject(
+export async function loadRunDetails<T>(
   sampleGroup: string,
   sample: string,
   timestamp: number
-): Promise<RunAnalysis | null> {
+): Promise<SampleRunDetails<T> | null> {
   const filePath = path.join(
     analysisDir,
     sampleGroup,
@@ -60,11 +60,10 @@ export async function loadRunAnalysisObject(
   }
 }
 
-// Returns a map of timestamp to Analysis object
-export async function loadAllRunAnalysisObjects(
+export async function loadAllRunDetailsForSample<T>(
   sampleGroup: string,
   sample: string
-): Promise<Record<string, RunAnalysis>> {
+): Promise<Record<string, SampleRunDetails<T>>> {
   const dirPath = path.join(analysisDir, sampleGroup, sample);
   try {
     const files = await fs.readdir(dirPath);
@@ -73,7 +72,7 @@ export async function loadAllRunAnalysisObjects(
         const timestamp = parseInt(file.replace(".json", ""));
         return [
           timestamp,
-          await loadRunAnalysisObject(sampleGroup, sample, timestamp),
+          await loadRunDetails(sampleGroup, sample, timestamp),
         ];
       })
     );

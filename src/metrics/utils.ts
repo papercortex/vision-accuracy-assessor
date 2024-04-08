@@ -1,51 +1,59 @@
-import { logger } from "../logger";
-import { Metrics } from "../models/metric.interface";
+import { distance } from "fastest-levenshtein";
+import { Task } from "../models/task.interface";
 
-export function calculateAdjustedMetrics(
-  TP: number,
-  FP: number,
-  FN: number,
-  noDataValue = 0
-): Metrics {
-  // Initialize metrics as null to represent cases where calculation isn't applicable
-  let precision = null;
-  let recall = null;
-  let f1Score = null;
+// Simple similarity measure for titles (could be replaced with a more sophisticated algorithm)
+function calculateTitleSimilarity(
+  aiTitle: string,
+  expectedTitle: string
+): number {
+  const similarity =
+    1 -
+    distance(aiTitle, expectedTitle) /
+      Math.max(aiTitle.length, expectedTitle.length);
+  return similarity; // Returns a value between 0 and 1
+}
 
-  // Handle cases where no predictions are made (FP = 0) and no expectations exist (FN = 0)
-  if (TP === 0 && FP === 0 && FN === 0) {
-    // Scenario with no data: could be interpreted as perfect (1) or undefined (null)
-    // Depending on use case, might choose to return 1 or keep as null
-    precision = recall = f1Score = noDataValue; // or 1, based on interpretational preference
-  } else {
-    // Calculate precision and recall with checks to avoid division by zero
-    precision = TP + FP === 0 ? 0 : TP / (TP + FP); // Adjusted to 0 to reflect no correct predictions when no attempts made
-    recall = TP + FN === 0 ? 0 : TP / (TP + FN); // Reflects failure to detect any positives when expected
+export function matchTasksByTitleSimilarity(
+  aiResponse: Task[],
+  expectedResponse: Task[],
+  similarityThreshold = 0.1
+): {
+  matchedPairs: [Task, Task][];
+  unmatchedAiTasks: Task[];
+  unmatchedExpectedTasks: Task[];
+} {
+  const matchedPairs: [Task, Task][] = [];
+  // Arrays to hold unmatched tasks
+  const unmatchedAiTasks: Task[] = [...aiResponse];
+  const unmatchedExpectedTasks: Task[] = [];
 
-    // Calculate F1 score only if precision and recall are both defined
-    if (precision !== null && recall !== null) {
-      if (precision + recall > 0) {
-        f1Score = (2 * (precision * recall)) / (precision + recall);
-      } else {
-        f1Score = 0;
+  expectedResponse.forEach((expectedTask) => {
+    let bestMatch: Task | null = null;
+    let highestSimilarity = 0;
+
+    aiResponse.forEach((aiTask) => {
+      const similarity = calculateTitleSimilarity(
+        aiTask.title,
+        expectedTask.title
+      );
+      if (similarity > highestSimilarity) {
+        highestSimilarity = similarity;
+        bestMatch = aiTask;
       }
+    });
+
+    if (bestMatch && highestSimilarity > similarityThreshold) {
+      matchedPairs.push([bestMatch, expectedTask]);
+      // Remove matched tasks from unmatchedAiTasks
+      unmatchedAiTasks.splice(unmatchedAiTasks.indexOf(bestMatch), 1);
+    } else {
+      unmatchedExpectedTasks.push(expectedTask);
     }
-  }
+  });
 
-  if (precision === null || recall === null || f1Score === null) {
-    logger.debug(
-      {
-        precision,
-        recall,
-        f1Score,
-        TP,
-        FP,
-        FN,
-      },
-      "Null metric values detected."
-    );
-    throw new Error("Null metric values detected.");
-  }
-
-  return { precision, recall, f1Score };
+  return {
+    matchedPairs,
+    unmatchedAiTasks,
+    unmatchedExpectedTasks,
+  };
 }

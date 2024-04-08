@@ -1,12 +1,12 @@
 import { distance } from "fastest-levenshtein";
 import { Task } from "../../models/task.interface";
-import { Metrics } from "../../models/metric.interface";
-import { calculateAdjustedMetrics } from "../utils";
+import { PerformanceMetrics } from "../../models/metric.interface";
+import { calculateAdjustedMetrics } from "../calculateAdjustedMetrics";
 
 export function calculateTitleMetricForTaskPair(
   aiTask: Task,
   expectedTask: Task
-): Metrics {
+): PerformanceMetrics {
   // Convert titles to lower case for case-insensitive comparison
   const aiTitle = aiTask.title.toLowerCase();
   const expectedTitle = expectedTask.title.toLowerCase();
