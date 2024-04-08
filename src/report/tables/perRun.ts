@@ -12,7 +12,6 @@ export function generatePerRunTable(run: Analysis) {
   // Initialize CLI Table
   const table = new Table({
     head: ["Attribute", "Precision", "Recall", "F1 Score"],
-    colWidths: [20, 15, 15, 15],
   });
 
   // Populate the table

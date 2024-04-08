@@ -22,6 +22,9 @@ async function generateReportForSample(sampleGroup: string, sample: string) {
   for (const timestamp in allRuns) {
     const run = allRuns[timestamp] as Analysis;
     const perRunTable = generatePerRunTable(run);
+    const readableTimestamp = new Date(parseInt(timestamp)).toLocaleString();
+    console.log(chalk.blue("\n-> Run at: ", readableTimestamp));
+    console.log(perRunTable.toString());
   }
 
   const aggregateTable = generateAggregateMetricsTable(allRuns);
@@ -31,8 +34,6 @@ async function generateReportForSample(sampleGroup: string, sample: string) {
   const overallMetricsTable = generateOverallMetricsTable(allRuns);
   console.log(chalk.blue("\n-> Overall Metrics:"));
   console.log(overallMetricsTable.toString());
-  console.log("=====================================");
-  console.log("\n\n");
 }
 
 export async function generateReport(args: Arguments) {

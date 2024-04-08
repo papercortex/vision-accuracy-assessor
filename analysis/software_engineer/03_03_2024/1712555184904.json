@@ -7,9 +7,9 @@
       "f1Score": 1
     },
     "tags": {
-      "precision": 0.75,
-      "recall": 0.75,
-      "f1Score": 0.75
+      "precision": 0.875,
+      "recall": 0.875,
+      "f1Score": 0.875
     },
     "title": {
       "precision": 0.625,
@@ -28,9 +28,9 @@
     }
   },
   "overallMetrics": {
-    "precision": 0.8333333333333334,
-    "recall": 0.8333333333333334,
-    "f1Score": 0.8333333333333334,
+    "precision": 0.8541666666666666,
+    "recall": 0.8541666666666666,
+    "f1Score": 0.8541666666666666,
     "totalAttributes": 5,
     "attributeWeights": {
       "date": 3,
@@ -49,16 +49,16 @@
       "toTime": "08:00",
       "tags": [],
       "subTasks": [],
-      "location": "Cafe"
+      "location": ""
     },
     {
-      "title": "Swimming with Younes",
+      "title": "Younes",
       "date": "2024-03-03",
       "fromTime": "16:00",
       "toTime": "17:00",
       "tags": [],
       "subTasks": [],
-      "location": "Pool"
+      "location": "Cafe"
     },
     {
       "title": "PaperCortex YT Slides Draft",
@@ -83,7 +83,7 @@
       "location": "Home"
     },
     {
-      "title": "Brainstorming & Planning Day",
+      "title": "Brainstorming & Planning day",
       "date": "2024-03-03",
       "fromTime": "08:00",
       "toTime": "09:00",
@@ -103,8 +103,8 @@
     {
       "title": "KodeKloud Admin",
       "date": "2024-03-03",
-      "fromTime": "20:00",
-      "toTime": "21:00",
+      "fromTime": "18:00",
+      "toTime": "19:00",
       "tags": [
         "KodeKloud"
       ],
@@ -123,7 +123,7 @@
       "location": "Office"
     },
     {
-      "title": "KESC Backlog Refining",
+      "title": "KESC Backlog refining",
       "date": "2024-03-03",
       "fromTime": "12:00",
       "toTime": "13:00",

@@ -45,7 +45,10 @@ async function processSample(
 
   logger.debug({ sample }, "Debug object stored");
 
-  const expectedResponse = await readExpectedJsonForImage(samplePath);
+  const expectedResponse = await readExpectedJsonForImage(
+    args.samplesGroup,
+    sample
+  );
   const metrics = calculateMetrics(aiResult, expectedResponse, [
     "date",
     "fromTime",

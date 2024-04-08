@@ -13,7 +13,7 @@ import {
 } from "./attributes/time";
 import { calculateTitleMetricForTaskPair } from "./attributes/title";
 
-const attributeWeights: Record<MetricAttribute, number> = {
+export const attributeWeights: Record<MetricAttribute, number> = {
   date: 3, // Highest weight
   fromTime: 3, // Highest weight
   toTime: 3, // Highest weight

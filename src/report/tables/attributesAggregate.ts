@@ -3,6 +3,7 @@ import Table from "cli-table";
 import chalk, { ChalkInstance } from "chalk";
 import { Analysis } from "../../models/analysis.interface";
 import { MetricAttribute, Metrics } from "../../models/metric.interface";
+import { attributeWeights } from "../../metrics/calculate";
 
 // Function to calculate color based on metric value
 function colorForMetric(value: number): ChalkInstance {
@@ -31,8 +32,8 @@ export function generateAggregateMetricsTable(
       "Average Precision",
       "Average Recall",
       "Average F1 Score",
+      "Weight",
     ],
-    colWidths: [20, 20, 20, 20],
   });
 
   let metricsSums = initializeMetricsSums();
@@ -52,6 +53,7 @@ export function generateAggregateMetricsTable(
 
   // Calculate averages and populate the table
   Object.entries(metricsSums).forEach(([attribute, metrics]) => {
+    const attr = attribute as MetricAttribute;
     const averagePrecision = metrics.precision / numberOfRuns;
     const averageRecall = metrics.recall / numberOfRuns;
     const averageF1Score = metrics.f1Score / numberOfRuns;
@@ -61,6 +63,7 @@ export function generateAggregateMetricsTable(
       colorForMetric(averagePrecision)(averagePrecision.toFixed(2)),
       colorForMetric(averageRecall)(averageRecall.toFixed(2)),
       colorForMetric(averageF1Score)(averageF1Score.toFixed(2)),
+      attributeWeights[attr].toString(),
     ]);
   });
 

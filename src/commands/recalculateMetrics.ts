@@ -1,3 +1,4 @@
+import path from "path";
 import { logger } from "../logger";
 import {
   loadAllRunAnalysisObjects,
@@ -9,6 +10,7 @@ import {
   calculateOverallMetrics,
 } from "../metrics/calculate";
 import { Analysis } from "../models/analysis.interface";
+import { readExpectedJsonForImage } from "../utils/fileHandler";
 
 interface Arguments {
   samplesGroup: string;
@@ -19,12 +21,13 @@ export async function recalculateSampleMetrics(
   sampleGroup: string,
   sample: string
 ) {
+  const expectedTasks = await readExpectedJsonForImage(sampleGroup, sample);
   const allRuns = await loadAllRunAnalysisObjects(sampleGroup, sample);
 
   await Object.keys(allRuns).reduce(async (acc, timestamp) => {
     await acc;
     const run = allRuns[timestamp] as Analysis;
-    const { aiTasks, expectedTasks } = run;
+    const { aiTasks } = run;
 
     const metrics = calculateMetrics(aiTasks, expectedTasks, [
       "date",

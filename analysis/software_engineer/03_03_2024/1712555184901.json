@@ -7,9 +7,9 @@
       "f1Score": 1
     },
     "tags": {
-      "precision": 0.75,
-      "recall": 0.75,
-      "f1Score": 0.75
+      "precision": 0.875,
+      "recall": 0.875,
+      "f1Score": 0.875
     },
     "title": {
       "precision": 0.625,
@@ -28,9 +28,9 @@
     }
   },
   "overallMetrics": {
-    "precision": 0.8333333333333334,
-    "recall": 0.8333333333333334,
-    "f1Score": 0.8333333333333334,
+    "precision": 0.8541666666666666,
+    "recall": 0.8541666666666666,
+    "f1Score": 0.8541666666666666,
     "totalAttributes": 5,
     "attributeWeights": {
       "date": 3,
@@ -47,91 +47,91 @@
       "date": "2024-03-03",
       "fromTime": "07:00",
       "toTime": "08:00",
-      "tags": [],
       "subTasks": [],
-      "location": ""
+      "location": "Outside",
+      "tags": []
     },
     {
       "title": "Younes",
       "date": "2024-03-03",
       "fromTime": "16:00",
       "toTime": "17:00",
-      "tags": [],
       "subTasks": [],
-      "location": "Cafe"
+      "location": "Cafe",
+      "tags": []
     },
     {
-      "title": "PaperCortex YT Slides Draft",
+      "title": "PaperCortex YT - Slides Draft",
       "date": "2024-03-03",
       "fromTime": "09:00",
       "toTime": "10:00",
+      "subTasks": [],
+      "location": "Home",
       "tags": [
         "PaperCortex YT"
-      ],
-      "subTasks": [],
-      "location": "Home"
+      ]
     },
     {
-      "title": "PaperCortex YT Script Research",
+      "title": "PaperCortex YT - Script Research",
       "date": "2024-03-03",
       "fromTime": "14:00",
       "toTime": "16:00",
+      "subTasks": [],
+      "location": "Home",
       "tags": [
         "PaperCortex YT"
-      ],
-      "subTasks": [],
-      "location": "Home"
+      ]
     },
     {
-      "title": "Brainstorming & Planning day",
+      "title": "Brainstorming & Planning Day",
       "date": "2024-03-03",
       "fromTime": "08:00",
       "toTime": "09:00",
-      "tags": [],
       "subTasks": [],
-      "location": "Home"
+      "location": "Home",
+      "tags": []
     },
     {
       "title": "Dinner with Family",
       "date": "2024-03-03",
       "fromTime": "17:00",
       "toTime": "20:00",
-      "tags": [],
       "subTasks": [],
-      "location": "Home"
+      "location": "Home",
+      "tags": []
     },
     {
       "title": "KodeKloud Admin",
       "date": "2024-03-03",
-      "fromTime": "18:00",
-      "toTime": "19:00",
+      "fromTime": "20:00",
+      "toTime": "21:00",
+      "subTasks": [],
+      "location": "Home",
       "tags": [
         "KodeKloud"
-      ],
-      "subTasks": [],
-      "location": "Home"
+      ]
     },
     {
       "title": "KESC Grooming Meeting",
       "date": "2024-03-03",
       "fromTime": "11:00",
       "toTime": "12:00",
+      "subTasks": [],
+      "location": "Office",
       "tags": [
         "KESC"
-      ],
-      "subTasks": [],
-      "location": "Office"
+      ]
     },
     {
-      "title": "KESC Backlog refining",
+      "title": "KESC Backlog Refining",
       "date": "2024-03-03",
       "fromTime": "12:00",
       "toTime": "13:00",
+      "subTasks": [],
+      "location": "Office",
       "tags": [
         "KESC"
-      ],
-      "subTasks": [],
-      "location": "Office"
+      ]
     }
   ],
   "expectedTasks": [

@@ -5,9 +5,9 @@ import {
   Metrics,
   OverallMetrics,
 } from "../models/metric.interface";
+import { Task } from "../models/task.interface";
 
 type ImageFile = string;
-type ExpectedOutput = any; // Adjust based on your actual expected output structure
 
 /**
  * @param directoryPath Path to the directory containing sample images.
@@ -35,21 +35,17 @@ async function listImageFiles(
   }
 }
 
-/**
- * Asynchronously reads the expected JSON output for a given image file.
- *
- * @param imagePath Path to the image file.
- * @returns A promise that resolves to the expected JSON output.
- */
 async function readExpectedJsonForImage(
-  imagePath: string
-): Promise<ExpectedOutput> {
-  const jsonPath = imagePath.replace(/\.(jpg|jpeg|png|gif)$/i, ".json");
+  sampleGroup: string,
+  sample: string
+): Promise<Task[]> {
+  const samplesDir = path.join(process.cwd(), "samples", sampleGroup);
+  const jsonPath = path.join(samplesDir, `${sample}.json`);
   try {
     const jsonData = await fs.readFile(jsonPath, { encoding: "utf8" });
     return JSON.parse(jsonData);
   } catch (error) {
-    console.error(`Error reading expected JSON for image ${imagePath}:`, error);
+    console.error(`Error reading expected JSON for image ${jsonPath}:`, error);
     throw error;
   }
 }

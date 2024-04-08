@@ -26,7 +26,6 @@ export function generateOverallMetricsTable(
       "Average Recall",
       "Average F1 Score",
     ],
-    colWidths: [20, 20, 20, 20],
   });
 
   // Collecting overall metrics for each run
