@@ -14,7 +14,7 @@ import {
 import { analyzeCalculatedMetrics } from "../api/analysis/openai";
 import { logger } from "../logger";
 import { Task } from "../models/task.interface";
-import { Analysis } from "../models/analysis.interface";
+import { RunAnalysis } from "../models/analysis.interface";
 
 interface Arguments {
   samples: string[];
@@ -28,7 +28,7 @@ async function processSample(
   sample: string,
   samplePath: string,
   args: Arguments
-): Promise<Analysis> {
+): Promise<RunAnalysis> {
   logger.info(`--- Processing sample: ${sample} ---`);
   const aiPrompt = await readContextForImage(samplePath);
 

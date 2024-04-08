@@ -9,7 +9,7 @@ import {
   calculateMetrics,
   calculateOverallMetrics,
 } from "../metrics/calculate";
-import { Analysis } from "../models/analysis.interface";
+import { RunAnalysis } from "../models/analysis.interface";
 import { readExpectedJsonForImage } from "../utils/fileHandler";
 
 interface Arguments {
@@ -26,7 +26,7 @@ export async function recalculateSampleMetrics(
 
   await Object.keys(allRuns).reduce(async (acc, timestamp) => {
     await acc;
-    const run = allRuns[timestamp] as Analysis;
+    const run = allRuns[timestamp] as RunAnalysis;
     const { aiTasks } = run;
 
     const metrics = calculateMetrics(aiTasks, expectedTasks, [

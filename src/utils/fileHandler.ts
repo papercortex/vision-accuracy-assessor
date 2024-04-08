@@ -9,6 +9,20 @@ import { Task } from "../models/task.interface";
 
 type ImageFile = string;
 
+// Samples can be found in ./samples/{sampleGroup}/{sample}.json
+async function listAllSamplesInGroup(sampleGroup: string): Promise<string[]> {
+  const samplesDir = path.join(process.cwd(), "samples", sampleGroup);
+  try {
+    const files = await fs.readdir(samplesDir);
+    return files
+      .filter((file) => file.match(/\.json$/i))
+      .map((file) => file.replace(/\.json$/i, ""));
+  } catch (error) {
+    console.error(`Error listing samples in group ${sampleGroup}:`, error);
+    throw error;
+  }
+}
+
 /**
  * @param directoryPath Path to the directory containing sample images.
  * @returns A promise that resolves to an array of image file paths.
@@ -104,6 +118,7 @@ async function storeAiAnalysisForImage(
 }
 
 export {
+  listAllSamplesInGroup,
   listImageFiles,
   readExpectedJsonForImage,
   readContextForImage,

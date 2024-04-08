@@ -1,6 +1,6 @@
 import fs from "fs/promises";
 import path from "path";
-import { Analysis } from "../models/analysis.interface";
+import { RunAnalysis } from "../models/analysis.interface";
 import { logger } from "../logger";
 
 const analysisDir = path.join(process.cwd(), `analysis`);
@@ -8,7 +8,7 @@ const analysisDir = path.join(process.cwd(), `analysis`);
 export async function storeRunAnalysisObject(
   sampleGroup: string,
   sample: string,
-  object: Analysis
+  object: RunAnalysis
 ) {
   try {
     await fs.mkdir(path.join(analysisDir, sampleGroup, sample), {
@@ -44,7 +44,7 @@ export async function loadRunAnalysisObject(
   sampleGroup: string,
   sample: string,
   timestamp: number
-): Promise<Analysis | null> {
+): Promise<RunAnalysis | null> {
   const filePath = path.join(
     analysisDir,
     sampleGroup,
@@ -64,7 +64,7 @@ export async function loadRunAnalysisObject(
 export async function loadAllRunAnalysisObjects(
   sampleGroup: string,
   sample: string
-): Promise<Record<string, Analysis>> {
+): Promise<Record<string, RunAnalysis>> {
   const dirPath = path.join(analysisDir, sampleGroup, sample);
   try {
     const files = await fs.readdir(dirPath);

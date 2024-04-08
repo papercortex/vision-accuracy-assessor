@@ -12,6 +12,7 @@ import {
   calculateToTimeMetricForTaskPair,
 } from "./attributes/time";
 import { calculateTitleMetricForTaskPair } from "./attributes/title";
+import { RunAnalysis } from "../models/analysis.interface";
 
 export const attributeWeights: Record<MetricAttribute, number> = {
   date: 3, // Highest weight
@@ -20,6 +21,17 @@ export const attributeWeights: Record<MetricAttribute, number> = {
   tags: 2, // High weight
   title: 1, // Default weight
 };
+
+// Function to initialize metrics sums with zeros
+function initializeMetricsSums(): Record<MetricAttribute, Metrics> {
+  return {
+    date: { precision: 0, recall: 0, f1Score: 0 },
+    tags: { precision: 0, recall: 0, f1Score: 0 },
+    title: { precision: 0, recall: 0, f1Score: 0 },
+    fromTime: { precision: 0, recall: 0, f1Score: 0 },
+    toTime: { precision: 0, recall: 0, f1Score: 0 },
+  };
+}
 
 function matchTasksByTitleSimilarity(
   aiResponse: Task[],
@@ -67,13 +79,7 @@ export function calculateMetrics(
   expectedResponse: Task[],
   attributes: MetricAttribute[]
 ): Record<MetricAttribute, Metrics> {
-  const metrics: Record<MetricAttribute, Metrics> = {
-    date: { precision: 0, recall: 0, f1Score: 0 },
-    tags: { precision: 0, recall: 0, f1Score: 0 },
-    title: { precision: 0, recall: 0, f1Score: 0 },
-    fromTime: { precision: 0, recall: 0, f1Score: 0 },
-    toTime: { precision: 0, recall: 0, f1Score: 0 },
-  };
+  const metrics = initializeMetricsSums();
   let totalWeights = 0;
 
   // Match tasks based on title similarity to pair them for comparison
@@ -177,4 +183,42 @@ export function calculateOverallMetrics(
     totalAttributes: Object.keys(metrics).length,
     attributeWeights,
   };
+}
+
+export function calculateAggregatedAttributesForMultipleRuns(
+  runs: Record<string, RunAnalysis>
+) {
+  let metricsSums = initializeMetricsSums();
+  let numberOfRuns = Object.keys(runs).length; // Tracking the number of runs for average calculation
+
+  // Sum metrics for each run
+  Object.values(runs).forEach((run: RunAnalysis) => {
+    Object.entries(run.metrics).forEach(
+      ([attribute, { precision, recall, f1Score }]) => {
+        const attr: MetricAttribute = attribute as MetricAttribute;
+        metricsSums[attr].precision += precision;
+        metricsSums[attr].recall += recall;
+        metricsSums[attr].f1Score += f1Score;
+      }
+    );
+  });
+
+  // Calculate averages and populate the table
+  const averages: Record<MetricAttribute, Metrics> = initializeMetricsSums();
+
+  Object.entries(metricsSums).forEach(([attribute, metrics]) => {
+    const attr = attribute as MetricAttribute;
+    averages[attr].precision = metrics.precision / numberOfRuns;
+    averages[attr].recall = metrics.recall / numberOfRuns;
+    averages[attr].f1Score = metrics.f1Score / numberOfRuns;
+  });
+
+  return averages;
+}
+
+export function calculateOverallMetricsForMultipleRuns(
+  runs: Record<string, RunAnalysis>
+): OverallMetrics {
+  const metrics = calculateAggregatedAttributesForMultipleRuns(runs);
+  return calculateOverallMetrics(metrics);
 }
