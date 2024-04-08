@@ -23,4 +23,3 @@ Other Rules for interpretation:
 
 - If time conflicts, use sub tasks.
 - Tags are the text between brackets if exists only
-- Today is {{currentDate}}

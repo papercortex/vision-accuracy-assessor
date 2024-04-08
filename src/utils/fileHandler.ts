@@ -1,6 +1,10 @@
 import fs from "fs/promises";
 import path from "path";
-import { Metrics, OverallMetrics } from "../metrics/calculate";
+import {
+  MetricAttribute,
+  Metrics,
+  OverallMetrics,
+} from "../models/metric.interface";
 
 type ImageFile = string;
 type ExpectedOutput = any; // Adjust based on your actual expected output structure
@@ -71,7 +75,7 @@ async function readContextForImage(imagePath: string) {
 
 async function storeAiAnalysisForImage(
   imagePath: string,
-  metrics: Record<string, Metrics>,
+  metrics: Record<MetricAttribute, Metrics>,
   overallMetrics: OverallMetrics,
   aiAnalysis: string
 ) {

@@ -1,5 +1,5 @@
+import { Metrics, OverallMetrics } from "../../models/metric.interface";
 import { openai } from "../openai";
-import { Metrics, OverallMetrics } from "../../metrics/calculate";
 
 export async function analyzeCalculatedMetrics(
   metrics: Record<string, Metrics>,

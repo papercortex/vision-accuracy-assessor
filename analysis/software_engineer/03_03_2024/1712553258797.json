@@ -1,0 +1,214 @@
+{
+  "fullSamplePath": "/Users/kareemelbahrawy/ai/projects/papercortex/vision-accuracy-assessor/samples/software_engineer/03_03_2024.png",
+  "metrics": {
+    "date": {
+      "precision": 1,
+      "recall": 1,
+      "f1Score": 1
+    },
+    "tags": {
+      "precision": 0.75,
+      "recall": 0.75,
+      "f1Score": 0.75
+    },
+    "title": {
+      "precision": 0.625,
+      "recall": 0.625,
+      "f1Score": 0.625
+    },
+    "fromTime": {
+      "precision": 0.875,
+      "recall": 0.875,
+      "f1Score": 0.875
+    },
+    "toTime": {
+      "precision": 0.75,
+      "recall": 0.75,
+      "f1Score": 0.75
+    }
+  },
+  "overallMetrics": {
+    "precision": 0.8333333333333334,
+    "recall": 0.8333333333333334,
+    "f1Score": 0.8333333333333334,
+    "totalAttributes": 5,
+    "attributeWeights": {
+      "date": 3,
+      "fromTime": 3,
+      "toTime": 3,
+      "tags": 2,
+      "title": 1
+    }
+  },
+  "prompt": "# Requirements\n\nUse your reasoning and make fair assumptions to create a JSON tasks array following this schema:\n\n```js\nconst taskSchema = {\n  type: \"object\",\n  properties: {\n    title: { type: \"string\" },\n    date: { type: \"string\", format: \"date\" }, // e.g. 2022-12-27\n    fromTime: { type: \"string\" }, // e.g. 08:45\n    toTime: { type: \"string\" },\n    tags: { type: \"array\", items: { type: \"string\" } },\n    subTasks: { type: \"array\", items: { type: \"string\" } },\n    location: { type: \"string\" }, // e.g. Home\n  },\n  required: [\"title\"],\n  additionalProperties: false,\n};\n```\n\nOther Rules for interpretation:\n\n- If time conflicts, use sub tasks.\n- Tags are the text between brackets if exists only\n\n# Who Is Writing Daily Plan\n\nI'm Kareem, I'm a software engineer. I have a son (Younes) and a daugther (Roqyia) and my wife is Asmaa.\n\nI'm currently working on:\n\n- SRE Learning on KodeKloud (tag: KodeKloud)\n- PaperCortex POC (tag: PaperCortex)\n- PaperCortex POC Youtube Series (tag: PaperCortex YT)\n- Presenter app that takes slides from reMarkable and present it with animations. (tag: Presenter)\n- KESC: Software Consultancy (tag: KESC)\n\n## PaperCortex Idea\n\n**Objective:** To transform handwritten notes into structured, digital formats using AI vision models.\n**Core Technology:** Utilizes GPT-4 vision to accurately interpret and digitize handwritten content.\n\n### POC Features:\n\n- Conversion of handwritten daily tasks into a digital format.\n- Dynamic web interface for real-time interaction with digitized tasks.\n- Calendar view for task scheduling and management.\n- Analytics and insights on user productivity and task completion.\n",
+  "aiTasks": [
+    {
+      "title": "Run",
+      "date": "2024-03-03",
+      "fromTime": "07:00",
+      "toTime": "08:00",
+      "tags": [],
+      "subTasks": [],
+      "location": "Cafe"
+    },
+    {
+      "title": "Swimming with Younes",
+      "date": "2024-03-03",
+      "fromTime": "16:00",
+      "toTime": "17:00",
+      "tags": [],
+      "subTasks": [],
+      "location": "Pool"
+    },
+    {
+      "title": "PaperCortex YT Slides Draft",
+      "date": "2024-03-03",
+      "fromTime": "09:00",
+      "toTime": "10:00",
+      "tags": [
+        "PaperCortex YT"
+      ],
+      "subTasks": [],
+      "location": "Home"
+    },
+    {
+      "title": "PaperCortex YT Script Research",
+      "date": "2024-03-03",
+      "fromTime": "14:00",
+      "toTime": "16:00",
+      "tags": [
+        "PaperCortex YT"
+      ],
+      "subTasks": [],
+      "location": "Home"
+    },
+    {
+      "title": "Brainstorming & Planning Day",
+      "date": "2024-03-03",
+      "fromTime": "08:00",
+      "toTime": "09:00",
+      "tags": [],
+      "subTasks": [],
+      "location": "Home"
+    },
+    {
+      "title": "Dinner with Family",
+      "date": "2024-03-03",
+      "fromTime": "17:00",
+      "toTime": "20:00",
+      "tags": [],
+      "subTasks": [],
+      "location": "Home"
+    },
+    {
+      "title": "KodeKloud Admin",
+      "date": "2024-03-03",
+      "fromTime": "20:00",
+      "toTime": "21:00",
+      "tags": [
+        "KodeKloud"
+      ],
+      "subTasks": [],
+      "location": "Home"
+    },
+    {
+      "title": "KESC Grooming Meeting",
+      "date": "2024-03-03",
+      "fromTime": "11:00",
+      "toTime": "12:00",
+      "tags": [
+        "KESC"
+      ],
+      "subTasks": [],
+      "location": "Office"
+    },
+    {
+      "title": "KESC Backlog Refining",
+      "date": "2024-03-03",
+      "fromTime": "12:00",
+      "toTime": "13:00",
+      "tags": [
+        "KESC"
+      ],
+      "subTasks": [],
+      "location": "Office"
+    }
+  ],
+  "expectedTasks": [
+    {
+      "title": "Run",
+      "date": "2024-03-03",
+      "fromTime": "07:00",
+      "toTime": "08:00",
+      "tags": [
+        "Health"
+      ]
+    },
+    {
+      "title": "Slide Draft",
+      "date": "2024-03-03",
+      "fromTime": "09:00",
+      "toTime": "10:00",
+      "tags": [
+        "PaperCortex YT"
+      ],
+      "subTasks": []
+    },
+    {
+      "title": "Script Research",
+      "date": "2024-03-03",
+      "fromTime": "14:00",
+      "toTime": "16:00",
+      "tags": [
+        "PaperCortex YT"
+      ],
+      "subTasks": []
+    },
+    {
+      "title": "Brainstorming & Planning Day",
+      "date": "2024-03-03",
+      "fromTime": "08:00",
+      "toTime": "09:00",
+      "tags": [],
+      "subTasks": []
+    },
+    {
+      "title": "Dinner with Family",
+      "date": "2024-03-03",
+      "fromTime": "17:00",
+      "toTime": "21:00",
+      "tags": [],
+      "subTasks": []
+    },
+    {
+      "title": "Learning",
+      "date": "2024-03-03",
+      "fromTime": "21:00",
+      "toTime": "22:00",
+      "tags": [
+        "KodeKloud"
+      ],
+      "subTasks": []
+    },
+    {
+      "title": "Grooming Meeting",
+      "date": "2024-03-03",
+      "fromTime": "11:00",
+      "toTime": "12:00",
+      "tags": [
+        "KESC"
+      ],
+      "subTasks": []
+    },
+    {
+      "title": "Backlog Refining",
+      "date": "2024-03-03",
+      "fromTime": "12:00",
+      "toTime": "13:00",
+      "tags": [
+        "KESC"
+      ],
+      "subTasks": []
+    }
+  ]
+}
