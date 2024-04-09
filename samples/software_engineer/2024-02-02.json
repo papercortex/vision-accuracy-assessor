@@ -1,74 +1,66 @@
 [
   {
     "title": "Grooming",
-    "date": "2023-02-02",
+    "date": "2024-02-02",
     "fromTime": "11:00",
     "toTime": "12:00",
     "tags": ["KESC"],
-    "subTasks": [],
-    "location": "Home"
+    "subTasks": []
   },
   {
-    "title": "Backup Refining",
-    "date": "2023-02-02",
+    "title": "Backlog Refining",
+    "date": "2024-02-02",
     "fromTime": "12:00",
     "toTime": "12:30",
-    "tags": ["PaperCortex"],
-    "subTasks": [],
-    "location": "Home"
+    "tags": ["KESC"],
+    "subTasks": []
   },
   {
-    "title": "Metrics Education",
-    "date": "2023-02-02",
+    "title": "Metrics calculation",
+    "date": "2024-02-02",
     "fromTime": "09:00",
     "toTime": "11:00",
     "tags": ["PaperCortex"],
-    "subTasks": [],
-    "location": "Home"
+    "subTasks": []
   },
   {
     "title": "Generating Reports",
-    "date": "2023-02-02",
+    "date": "2024-02-02",
     "fromTime": "14:00",
     "toTime": "15:30",
     "tags": ["PaperCortex"],
-    "subTasks": [],
-    "location": "Home"
+    "subTasks": []
   },
   {
     "title": "Run",
-    "date": "2023-02-02",
+    "date": "2024-02-02",
     "fromTime": "07:00",
     "toTime": "08:00",
     "tags": ["Exercise"],
-    "subTasks": [],
-    "location": "Home"
+    "subTasks": []
   },
   {
     "title": "Brainstorm & Plan",
-    "date": "2023-02-02",
-    "fromTime": "20:00",
-    "toTime": "21:00",
+    "date": "2024-02-02",
+    "fromTime": "08:00",
+    "toTime": "09:00",
     "tags": ["Recreational"],
-    "subTasks": [],
-    "location": "Home"
+    "subTasks": []
   },
   {
     "title": "Younes",
-    "date": "2023-02-02",
+    "date": "2024-02-02",
     "fromTime": "16:00",
     "toTime": "17:00",
     "tags": ["Family"],
-    "subTasks": [],
-    "location": "Home"
+    "subTasks": []
   },
   {
     "title": "Dinner & Family",
-    "date": "2023-02-02",
+    "date": "2024-02-02",
     "fromTime": "17:00",
     "toTime": "20:00",
     "tags": ["Family"],
-    "subTasks": [],
-    "location": "Home"
+    "subTasks": []
   }
 ]

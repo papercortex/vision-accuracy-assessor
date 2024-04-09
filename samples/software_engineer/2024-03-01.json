@@ -13,7 +13,7 @@
     "fromTime": "08:00",
     "toTime": "10:00",
     "tags": ["PaperCortex"],
-    "subTasks": []
+    "subTasks": ["3 days"]
   },
   {
     "title": "Meeting",
@@ -29,6 +29,14 @@
     "fromTime": "11:00",
     "toTime": "12:00",
     "tags": ["KESC"],
+    "subTasks": []
+  },
+  {
+    "title": "Lunch",
+    "date": "2024-03-01",
+    "fromTime": "12:00",
+    "toTime": "13:00",
+    "tags": [],
     "subTasks": []
   },
   {

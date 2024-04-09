@@ -5,8 +5,7 @@
     "fromTime": "07:00",
     "toTime": "08:00",
     "tags": [],
-    "subTasks": [],
-    "location": "Café"
+    "subTasks": []
   },
   {
     "title": "Younes",
@@ -14,26 +13,23 @@
     "fromTime": "16:00",
     "toTime": "17:00",
     "tags": [],
-    "subTasks": [],
-    "location": ""
+    "subTasks": []
   },
   {
-    "title": "PaperCortex YT Slide Draft",
+    "title": "Slides Draft",
     "date": "2024-03-03",
     "fromTime": "09:00",
     "toTime": "10:00",
     "tags": ["PaperCortex YT"],
-    "subTasks": [],
-    "location": ""
+    "subTasks": []
   },
   {
-    "title": "PaperCortex YT Script Research",
+    "title": "Script Research",
     "date": "2024-03-03",
     "fromTime": "14:00",
     "toTime": "16:00",
     "tags": ["PaperCortex YT"],
-    "subTasks": [],
-    "location": ""
+    "subTasks": []
   },
   {
     "title": "Brainstorming & Planning Day",
@@ -41,43 +37,38 @@
     "fromTime": "08:00",
     "toTime": "09:00",
     "tags": [],
-    "subTasks": [],
-    "location": "Home"
+    "subTasks": []
   },
   {
-    "title": "Dinner with Family",
+    "title": "Dinner & Family",
     "date": "2024-03-03",
     "fromTime": "17:00",
-    "toTime": "20:00",
-    "tags": [],
-    "subTasks": [],
-    "location": "Home"
-  },
-  {
-    "title": "KodeKloud Admin",
-    "date": "2024-03-03",
-    "fromTime": "20:00",
     "toTime": "21:00",
-    "tags": ["KodeKloud"],
-    "subTasks": [],
-    "location": "Home"
+    "tags": [],
+    "subTasks": []
   },
   {
-    "title": "KESC Grooming Meeting",
+    "title": "Learning",
+    "date": "2024-03-03",
+    "fromTime": "21:00",
+    "toTime": "22:00",
+    "tags": ["KodeKloud"],
+    "subTasks": []
+  },
+  {
+    "title": "Grooming - Meeting",
     "date": "2024-03-03",
     "fromTime": "11:00",
     "toTime": "12:00",
     "tags": ["KESC"],
-    "subTasks": [],
-    "location": "Office"
+    "subTasks": []
   },
   {
-    "title": "KESC Backlog Refining",
+    "title": "Backlog Refining",
     "date": "2024-03-03",
     "fromTime": "12:00",
     "toTime": "13:00",
     "tags": ["KESC"],
-    "subTasks": [],
-    "location": "Office"
+    "subTasks": []
   }
 ]

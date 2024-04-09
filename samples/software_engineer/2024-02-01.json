@@ -5,17 +5,15 @@
     "fromTime": "07:00",
     "toTime": "08:30",
     "tags": [],
-    "subTasks": [],
-    "location": ""
+    "subTasks": []
   },
   {
-    "title": "Coffee & Plan Day",
+    "title": "Coffee + Plan Day",
     "date": "2024-02-01",
     "fromTime": "08:45",
     "toTime": "09:15",
     "tags": [],
-    "subTasks": [],
-    "location": ""
+    "subTasks": []
   },
   {
     "title": "Create Sample Data",
@@ -23,30 +21,27 @@
     "fromTime": "10:00",
     "toTime": "12:00",
     "tags": ["PaperCortex"],
-    "subTasks": ["Research metrics (precision, recall, f1score)"],
-    "location": ""
+    "subTasks": ["Research metrics (precision, recall, f1Score)"]
   },
   {
     "title": "Lunch Break",
     "date": "2024-02-01",
     "fromTime": "12:00",
-    "toTime": "14:00",
+    "toTime": "13:00",
     "tags": [],
-    "subTasks": [],
-    "location": ""
+    "subTasks": []
   },
   {
     "title": "CLI Command",
     "date": "2024-02-01",
-    "fromTime": "14:00",
+    "fromTime": "13:00",
     "toTime": "16:00",
     "tags": ["PaperCortex"],
     "subTasks": [
       "Load samples",
       "Send to GPT-4 vision",
       "Save result to debug file"
-    ],
-    "location": ""
+    ]
   },
   {
     "title": "Skate with Younes",
@@ -54,8 +49,7 @@
     "fromTime": "16:00",
     "toTime": "17:00",
     "tags": [],
-    "subTasks": [],
-    "location": ""
+    "subTasks": []
   },
   {
     "title": "Family Dinner",
@@ -63,8 +57,7 @@
     "fromTime": "17:00",
     "toTime": "20:00",
     "tags": [],
-    "subTasks": [],
-    "location": ""
+    "subTasks": []
   },
   {
     "title": "Prometheus",
@@ -72,7 +65,6 @@
     "fromTime": "20:00",
     "toTime": "21:30",
     "tags": ["KodeKloud"],
-    "subTasks": [],
-    "location": ""
+    "subTasks": []
   }
 ]
