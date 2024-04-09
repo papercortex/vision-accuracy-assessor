@@ -1,64 +1,78 @@
 [
   {
     "title": "Exercise",
-    "date": "2024-02-28",
+    "date": "2024-02-01",
     "fromTime": "07:00",
     "toTime": "08:30",
-    "tags": []
+    "tags": [],
+    "subTasks": [],
+    "location": ""
   },
   {
     "title": "Coffee & Plan Day",
-    "date": "2024-02-28",
+    "date": "2024-02-01",
     "fromTime": "08:45",
     "toTime": "09:15",
-    "tags": []
+    "tags": [],
+    "subTasks": [],
+    "location": ""
   },
   {
     "title": "Create Sample Data",
-    "date": "2024-02-28",
+    "date": "2024-02-01",
     "fromTime": "10:00",
     "toTime": "12:00",
     "tags": ["PaperCortex"],
-    "subTasks": ["Research metrics (precision, recall, f1 score)"]
+    "subTasks": ["Research metrics (precision, recall, f1score)"],
+    "location": ""
   },
   {
     "title": "Lunch Break",
-    "date": "2024-02-28",
+    "date": "2024-02-01",
     "fromTime": "12:00",
-    "toTime": "13:00",
-    "tags": []
+    "toTime": "14:00",
+    "tags": [],
+    "subTasks": [],
+    "location": ""
   },
   {
     "title": "CLI Command",
-    "date": "2024-02-28",
-    "fromTime": "13:00",
+    "date": "2024-02-01",
+    "fromTime": "14:00",
     "toTime": "16:00",
     "tags": ["PaperCortex"],
     "subTasks": [
       "Load samples",
-      "Send to GPT-4 Vision",
+      "Send to GPT-4 vision",
       "Save result to debug file"
-    ]
+    ],
+    "location": ""
   },
   {
     "title": "Skate with Younes",
-    "date": "2024-02-28",
+    "date": "2024-02-01",
     "fromTime": "16:00",
     "toTime": "17:00",
-    "tags": []
+    "tags": [],
+    "subTasks": [],
+    "location": ""
   },
   {
-    "title": "Family & Dinner",
-    "date": "2024-02-28",
+    "title": "Family Dinner",
+    "date": "2024-02-01",
     "fromTime": "17:00",
     "toTime": "20:00",
-    "tags": []
+    "tags": [],
+    "subTasks": [],
+    "location": ""
   },
   {
     "title": "Prometheus",
-    "date": "2024-02-28",
+    "date": "2024-02-01",
     "fromTime": "20:00",
     "toTime": "21:30",
-    "tags": ["KodeKloud"]
+    "tags": ["KodeKloud"],
+    "subTasks": [],
+    "location": ""
   }
 ]

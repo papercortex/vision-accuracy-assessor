@@ -5,37 +5,7 @@ import {
 } from "../../models/analysis.interface";
 import { renderMetricValue } from "./utils";
 
-export function generateAggregateMetricsTable<T>(
-  sampleAnalysis: SampleAnalysis<T>
-) {
-  const table = new Table({
-    head: [
-      "Attribute",
-      "Average Precision",
-      "Average Recall",
-      "Average F1 Score",
-    ],
-  });
-
-  Object.entries(sampleAnalysis.averageAttributeMetrics).forEach(
-    ([attribute, metrics]) => {
-      const averagePrecision = metrics.precision;
-      const averageRecall = metrics.recall;
-      const averageF1Score = metrics.f1Score;
-
-      table.push([
-        attribute,
-        renderMetricValue(averagePrecision),
-        renderMetricValue(averageRecall),
-        renderMetricValue(averageF1Score),
-      ]);
-    }
-  );
-
-  return table;
-}
-
-export function generateAggregateForMultipleSamplesTable<T>(
+export function getMultipleSamplesTablePerMetric<T>(
   samples: SampleAnalysis<T>[],
   metricAttribute: "precision" | "recall" | "f1Score"
 ) {
@@ -49,6 +19,7 @@ export function generateAggregateForMultipleSamplesTable<T>(
       "fromTime",
       "toTime",
       "Weighted Avg.",
+      "Task Level",
     ],
   });
 
@@ -72,6 +43,9 @@ export function generateAggregateForMultipleSamplesTable<T>(
         sampleAnalysis.averageAttributeMetrics.toTime[metricAttribute]
       ),
       renderMetricValue(sampleAnalysis.overallWeightedMetrics[metricAttribute]),
+      renderMetricValue(
+        sampleAnalysis.overallTaskLevelMetrics[metricAttribute]
+      ),
     ];
 
     table.push(sampleRow);
@@ -80,24 +54,9 @@ export function generateAggregateForMultipleSamplesTable<T>(
   return table;
 }
 
-export function generateOverallMetricsTable<T>(samples: SampleAnalysis<T>[]) {
-  const table = new Table({
-    head: ["Sample", "Precision", "Recall", "F1 Score"],
-  });
-
-  samples.forEach((sample) => {
-    table.push([
-      sample.sample,
-      renderMetricValue(sample.overallWeightedMetrics.precision),
-      renderMetricValue(sample.overallWeightedMetrics.recall),
-      renderMetricValue(sample.overallWeightedMetrics.f1Score),
-    ]);
-  });
-
-  return table;
-}
-
-export function generatePerRunTable<T>(runAnalysis: SampleRunAnalysis<T>) {
+export function getRunAttributeMetricsTable<T>(
+  runAnalysis: SampleRunAnalysis<T>
+) {
   // Initialize CLI Table
   const table = new Table({
     head: ["Attribute", "Precision", "Recall", "F1 Score"],

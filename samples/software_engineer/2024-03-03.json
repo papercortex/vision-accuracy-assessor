@@ -4,23 +4,36 @@
     "date": "2024-03-03",
     "fromTime": "07:00",
     "toTime": "08:00",
-    "tags": []
+    "tags": [],
+    "subTasks": [],
+    "location": "Café"
   },
   {
-    "title": "Slides Draft",
+    "title": "Younes",
+    "date": "2024-03-03",
+    "fromTime": "16:00",
+    "toTime": "17:00",
+    "tags": [],
+    "subTasks": [],
+    "location": ""
+  },
+  {
+    "title": "PaperCortex YT Slide Draft",
     "date": "2024-03-03",
     "fromTime": "09:00",
     "toTime": "10:00",
     "tags": ["PaperCortex YT"],
-    "subTasks": []
+    "subTasks": [],
+    "location": ""
   },
   {
-    "title": "Script Research",
+    "title": "PaperCortex YT Script Research",
     "date": "2024-03-03",
     "fromTime": "14:00",
     "toTime": "16:00",
     "tags": ["PaperCortex YT"],
-    "subTasks": []
+    "subTasks": [],
+    "location": ""
   },
   {
     "title": "Brainstorming & Planning Day",
@@ -28,38 +41,43 @@
     "fromTime": "08:00",
     "toTime": "09:00",
     "tags": [],
-    "subTasks": []
+    "subTasks": [],
+    "location": "Home"
   },
   {
     "title": "Dinner with Family",
     "date": "2024-03-03",
     "fromTime": "17:00",
-    "toTime": "21:00",
+    "toTime": "20:00",
     "tags": [],
-    "subTasks": []
+    "subTasks": [],
+    "location": "Home"
   },
   {
-    "title": "Learning",
+    "title": "KodeKloud Admin",
     "date": "2024-03-03",
-    "fromTime": "21:00",
-    "toTime": "22:00",
+    "fromTime": "20:00",
+    "toTime": "21:00",
     "tags": ["KodeKloud"],
-    "subTasks": []
+    "subTasks": [],
+    "location": "Home"
   },
   {
-    "title": "Grooming Meeting",
+    "title": "KESC Grooming Meeting",
     "date": "2024-03-03",
     "fromTime": "11:00",
     "toTime": "12:00",
     "tags": ["KESC"],
-    "subTasks": []
+    "subTasks": [],
+    "location": "Office"
   },
   {
-    "title": "Backlog Refining",
+    "title": "KESC Backlog Refining",
     "date": "2024-03-03",
     "fromTime": "12:00",
     "toTime": "13:00",
     "tags": ["KESC"],
-    "subTasks": []
+    "subTasks": [],
+    "location": "Office"
   }
 ]

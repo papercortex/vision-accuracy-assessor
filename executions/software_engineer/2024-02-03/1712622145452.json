@@ -1,0 +1,87 @@
+{
+  "sample": "2024-02-03",
+  "sampleGroup": "software_engineer",
+  "prompt": "# Requirements\n\nUse your reasoning and make fair assumptions to create a JSON tasks array following this schema:\n\n```js\nconst taskSchema = {\n  type: \"object\",\n  properties: {\n    title: { type: \"string\" },\n    date: { type: \"string\", format: \"date\" }, // e.g. 2022-12-27\n    fromTime: { type: \"string\" }, // e.g. 08:45\n    toTime: { type: \"string\" },\n    tags: { type: \"array\", items: { type: \"string\" } },\n    subTasks: { type: \"array\", items: { type: \"string\" } },\n    location: { type: \"string\" }, // e.g. Home\n  },\n  required: [\"title\"],\n  additionalProperties: false,\n};\n```\n\nOther Rules for interpretation:\n\n- If time conflicts, use sub tasks.\n- Tags are the text between brackets if exists only\n\n# Who Is Writing Daily Plan\n\nI'm Kareem, I'm a software engineer. I have a son (Younes) and a daugther (Roqyia) and my wife is Asmaa.\n\nI'm currently working on:\n\n- SRE Learning on KodeKloud (tag: KodeKloud)\n- PaperCortex POC (tag: PaperCortex)\n- PaperCortex POC Youtube Series (tag: PaperCortex YT)\n- Presenter app that takes slides from reMarkable and present it with animations. (tag: Presenter)\n- KESC: Software Consultancy (tag: KESC)\n\n## PaperCortex Idea\n\n**Objective:** To transform handwritten notes into structured, digital formats using AI vision models.\n**Core Technology:** Utilizes GPT-4 vision to accurately interpret and digitize handwritten content.\n\n### POC Features:\n\n- Conversion of handwritten daily tasks into a digital format.\n- Dynamic web interface for real-time interaction with digitized tasks.\n- Calendar view for task scheduling and management.\n- Analytics and insights on user productivity and task completion.\n",
+  "aiJson": [
+    {
+      "title": "Run",
+      "date": "2023-02-03",
+      "fromTime": "07:00",
+      "toTime": "08:00",
+      "tags": [],
+      "subTasks": [],
+      "location": ""
+    },
+    {
+      "title": "Plan Day",
+      "date": "2023-02-03",
+      "fromTime": "08:00",
+      "toTime": "09:00",
+      "tags": [],
+      "subTasks": [],
+      "location": ""
+    },
+    {
+      "title": "Metric Calc (prec., recall, f1)",
+      "date": "2023-02-03",
+      "fromTime": "09:00",
+      "toTime": "11:00",
+      "tags": [
+        "Paper Cortex"
+      ],
+      "subTasks": [],
+      "location": ""
+    },
+    {
+      "title": "Grooming",
+      "date": "2023-02-03",
+      "fromTime": "11:00",
+      "toTime": "12:30",
+      "tags": [
+        "KESC"
+      ],
+      "subTasks": [
+        "Meeting"
+      ],
+      "location": ""
+    },
+    {
+      "title": "Break",
+      "date": "2023-02-03",
+      "fromTime": "12:30",
+      "toTime": "02:00",
+      "tags": [],
+      "subTasks": [],
+      "location": ""
+    },
+    {
+      "title": "Evaluate & Analyze",
+      "date": "2023-02-03",
+      "fromTime": "02:00",
+      "toTime": "04:00",
+      "tags": [
+        "Paper Cortex"
+      ],
+      "subTasks": [],
+      "location": ""
+    },
+    {
+      "title": "Time with Younes",
+      "date": "2023-02-03",
+      "fromTime": "04:00",
+      "toTime": "05:00",
+      "tags": [],
+      "subTasks": [],
+      "location": ""
+    },
+    {
+      "title": "Family Dinner",
+      "date": "2023-02-03",
+      "fromTime": "05:00",
+      "toTime": "08:00",
+      "tags": [],
+      "subTasks": [],
+      "location": ""
+    }
+  ]
+}

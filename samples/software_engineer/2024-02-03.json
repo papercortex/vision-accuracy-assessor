@@ -1,0 +1,74 @@
+[
+  {
+    "title": "Run",
+    "date": "2024-02-03",
+    "fromTime": "07:00",
+    "toTime": "07:30",
+    "tags": [],
+    "subTasks": [],
+    "location": ""
+  },
+  {
+    "title": "Plan Day",
+    "date": "2024-02-03",
+    "fromTime": "08:00",
+    "toTime": "09:00",
+    "tags": [],
+    "subTasks": [],
+    "location": "Home"
+  },
+  {
+    "title": "Metric Calc. (prec., recall, f1)",
+    "date": "2024-02-03",
+    "fromTime": "09:00",
+    "toTime": "11:00",
+    "tags": ["PaperCortex"],
+    "subTasks": [],
+    "location": ""
+  },
+  {
+    "title": "Grooming",
+    "date": "2024-02-03",
+    "fromTime": "11:00",
+    "toTime": "12:30",
+    "tags": ["KESC"],
+    "subTasks": [],
+    "location": ""
+  },
+  {
+    "title": "Break",
+    "date": "2024-02-03",
+    "fromTime": "12:30",
+    "toTime": "14:00",
+    "tags": [],
+    "subTasks": [],
+    "location": ""
+  },
+  {
+    "title": "Evaluate & Analyze",
+    "date": "2024-02-03",
+    "fromTime": "14:00",
+    "toTime": "16:00",
+    "tags": ["PaperCortex"],
+    "subTasks": [],
+    "location": ""
+  },
+  {
+    "title": "Time with Younes",
+    "date": "2024-02-03",
+    "fromTime": "16:00",
+    "toTime": "17:00",
+    "tags": [],
+    "subTasks": [],
+    "location": ""
+  },
+  {
+    "title": "Family Dinner",
+    "date": "2024-02-03",
+    "fromTime": "17:00",
+    "toTime": "18:00",
+    "tags": [],
+    "subTasks": [],
+    "location": "Home"
+  }
+]

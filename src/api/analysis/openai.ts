@@ -1,12 +1,9 @@
-import {
-  PerformanceMetrics,
-  RunWeightedAverageMetrics,
-} from "../../models/metric.interface";
+import { PerformanceMetrics } from "../../models/metric.interface";
 import { openai } from "../openai";
 
 export async function analyzeCalculatedMetrics(
   metrics: Record<string, PerformanceMetrics>,
-  overallMetrics: RunWeightedAverageMetrics
+  overallMetrics: PerformanceMetrics
 ) {
   if (!process.env.OPENAI_ANALYSIS_ASSISTANT_ID) {
     throw new Error("OPENAI_ANALYSIS_ASSISTANT_ID is not set");

@@ -11,6 +11,7 @@ export interface SampleRunAnalysis<T> {
   details: SampleRunDetails<T>;
   attributeMetrics: Record<MetricAttribute, PerformanceMetrics>;
   weightedAggregateMetrics: PerformanceMetrics;
+  taskLevelMetrics: PerformanceMetrics;
 }
 
 export interface SampleAnalysis<T> {
@@ -19,6 +20,7 @@ export interface SampleAnalysis<T> {
   runs: Record<string, SampleRunAnalysis<T>>;
   averageAttributeMetrics: Record<MetricAttribute, PerformanceMetrics>;
   overallWeightedMetrics: PerformanceMetrics;
+  overallTaskLevelMetrics: PerformanceMetrics;
 }
 
 export interface TestSample<T> {
