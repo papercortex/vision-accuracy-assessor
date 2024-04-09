@@ -48,6 +48,11 @@ yargs(hideBin(process.argv))
           type: "string",
           demandOption: true,
           array: true,
+        })
+        .option("store-report", {
+          describe: "Store the report in the database",
+          type: "boolean",
+          default: false,
         });
     },
     generateReport

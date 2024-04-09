@@ -12,6 +12,7 @@ import { storeReport } from "../services/reports";
 interface Arguments {
   samplesGroup: string;
   samples: string[];
+  storeReport: boolean;
 }
 
 const reportLogs: string[] = [];
@@ -74,7 +75,7 @@ export async function generateReport(args: Arguments) {
   reportLogs.push("=====================================");
 
   console.log(reportLogs.join("\n"));
-  if (args.samples[0] === "all") {
+  if (args.storeReport) {
     await storeReport(reportLogs.join("\n"));
   }
 }
