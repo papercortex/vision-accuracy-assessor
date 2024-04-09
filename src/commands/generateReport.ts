@@ -7,20 +7,22 @@ import {
 import { Task } from "../models/task.interface";
 import { listAllSamplesInGroup, loadSample } from "../services/samples";
 import { analyze } from "../services/analysis";
+import { storeReport } from "../services/reports";
 
 interface Arguments {
   samplesGroup: string;
   samples: string[];
 }
 
+const reportLogs: string[] = [];
+
 async function generateReportForSample(sampleAnalysis: SampleAnalysis<Task[]>) {
-  console.log("=====================================");
-  console.log(
-    "> Sample Analysis:",
-    `${sampleAnalysis.sampleGroup}/${sampleAnalysis.sample}`
+  reportLogs.push("=====================================");
+  reportLogs.push(
+    `> Sample Analysis: ${sampleAnalysis.sampleGroup}/${sampleAnalysis.sample}`
   );
-  console.log("-------------------------------------");
-  console.log("- Total Runs: ", Object.keys(sampleAnalysis.runs).length);
+  reportLogs.push("-------------------------------------");
+  reportLogs.push(`- Total Runs: ${Object.keys(sampleAnalysis.runs).length}`);
 
   for (const timestamp in sampleAnalysis.runs) {
     const run = sampleAnalysis.runs[timestamp];
@@ -28,12 +30,11 @@ async function generateReportForSample(sampleAnalysis: SampleAnalysis<Task[]>) {
       throw new Error(`Run not found for timestamp: ${timestamp}`);
     }
     const perRunTable = getRunAttributeMetricsTable(run);
-    const readableTimestamp = new Date(parseInt(timestamp)).toLocaleString();
-    console.log(chalk.blue("\n-> Run at: ", readableTimestamp));
-    console.log(perRunTable.toString());
+    reportLogs.push(chalk.blue("\n-> Run timestamp: ", timestamp));
+    reportLogs.push(perRunTable.toString());
   }
-  console.log("=====================================");
-  console.log("\n\n");
+  reportLogs.push("=====================================");
+  reportLogs.push("\n\n");
 }
 
 export async function generateReport(args: Arguments) {
@@ -55,16 +56,19 @@ export async function generateReport(args: Arguments) {
 
   samplesAnalysis.forEach(generateReportForSample);
 
-  console.log("=====================================");
-  console.log("> Summary of Samples:");
-  console.log("-------------------------------------");
+  reportLogs.push("=====================================");
+  reportLogs.push("> Summary of Samples:");
+  reportLogs.push("-------------------------------------");
   ["precision", "recall", "f1Score"].forEach((metric) => {
     const metricSamplesSummary = getMultipleSamplesTablePerMetric(
       samplesAnalysis,
       metric as "precision" | "recall" | "f1Score"
     );
-    console.log(chalk.blue("\n->", metric, "Summary:"));
-    console.log(metricSamplesSummary.toString());
+    reportLogs.push(chalk.blue("\n->", metric, "Summary:"));
+    reportLogs.push(metricSamplesSummary.toString());
   });
-  console.log("=====================================");
+  reportLogs.push("=====================================");
+
+  console.log(reportLogs.join("\n"));
+  await storeReport(reportLogs.join("\n"));
 }
