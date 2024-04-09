@@ -1,25 +1,31 @@
 # Requirements
 
-Use your reasoning and make fair assumptions to create a JSON tasks array following this schema:
+Your task is to analyze an image of handwritten notes and extract tasks into a JSON array. Each task should be structured following the schema provided below:
 
 ```js
 const taskSchema = {
   type: "object",
   properties: {
     title: { type: "string" },
-    date: { type: "string", format: "date" }, // e.g. 2022-12-27
+    date: { type: "string", format: "date" }, // e.g. 2024-10-27
     fromTime: { type: "string" }, // e.g. 08:45
     toTime: { type: "string" },
-    tags: { type: "array", items: { type: "string" } },
-    subTasks: { type: "array", items: { type: "string" } },
-    location: { type: "string" }, // e.g. Home
+    tags: { type: "array", items: { type: "string" } }, // Extract from brackets
+    subTasks: { type: "array", items: { type: "string" } }, // Optional, inferred from context
   },
   required: ["title"],
   additionalProperties: false,
 };
 ```
 
+# Interpretation Guidelines
+
+- Date: Use the date depicted in the image. If none is provided, assume the current year is 2024.
+- Tags: Include only if explicitly mentioned within brackets.
+- SubTasks: List as subtasks any items that are clearly part of a larger task but are detailed separately.
+
 Other Rules for interpretation:
 
-- If time conflicts, use sub tasks.
-- Tags are the text between brackets if exists only
+- If there's a time conflict, use sub tasks.
+- Tags are the text between brackets if exists only.
+- We are currently in the year 2024.

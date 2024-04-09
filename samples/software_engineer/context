@@ -1,23 +1,13 @@
-# Who Is Writing Daily Plan
+# Personal and Project Context
 
-I'm Kareem, I'm a software engineer. I have a son (Younes) and a daugther (Roqyia) and my wife is Asmaa.
+The planner, Kareem is a software engineer. He has a son (Younes) and a daugther (Roqyia) and his wife is Asmaa.
 
-I'm currently working on:
+Kareem is currently involved in:
 
 - SRE Learning on KodeKloud (tag: KodeKloud)
-- PaperCortex POC (tag: PaperCortex)
-- PaperCortex POC Youtube Series (tag: PaperCortex YT)
+- PaperCortex project development (tag: PaperCortex)
+- PaperCortex youtube series creation (tag: PaperCortex YT)
 - Presenter app that takes slides from reMarkable and present it with animations. (tag: Presenter)
-- KESC: Software Consultancy (tag: KESC)
+- KESC: Software Consultancy Agency (tag: KESC)
 
-## PaperCortex Idea
-
-**Objective:** To transform handwritten notes into structured, digital formats using AI vision models.
-**Core Technology:** Utilizes GPT-4 vision to accurately interpret and digitize handwritten content.
-
-### POC Features:
-
-- Conversion of handwritten daily tasks into a digital format.
-- Dynamic web interface for real-time interaction with digitized tasks.
-- Calendar view for task scheduling and management.
-- Analytics and insights on user productivity and task completion.
+Consider these tags when they correspond with the tasks mentioned in the notes.

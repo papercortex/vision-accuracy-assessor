@@ -50,6 +50,10 @@ export async function generateReport(args: Arguments) {
     );
   }
 
+  reportLogs.push("=====================================");
+  reportLogs.push("> Report date: " + new Date().toUTCString());
+  reportLogs.push("-------------------------------------");
+
   for (const sample of samples) {
     samplesAnalysis.push(await analyze(sample));
   }
@@ -70,5 +74,7 @@ export async function generateReport(args: Arguments) {
   reportLogs.push("=====================================");
 
   console.log(reportLogs.join("\n"));
-  await storeReport(reportLogs.join("\n"));
+  if (args.samples[0] === "all") {
+    await storeReport(reportLogs.join("\n"));
+  }
 }

@@ -3,7 +3,7 @@ import chalk from "chalk";
 export function renderMetricValue(
   value: number,
   thresholds = {
-    green: 0.9,
+    green: 0.85,
     yellow: 0.5,
     red: 0,
   }

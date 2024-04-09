@@ -3,7 +3,11 @@ import { transformImageToJSON } from "../api/vision/openai";
 import { logger } from "../logger";
 import { Task } from "../models/task.interface";
 import { SampleRunDetails, TestSample } from "../models/analysis.interface";
-import { loadSample, readSampleContext } from "../services/samples";
+import {
+  listAllSamplesInGroup,
+  loadSample,
+  readSampleContext,
+} from "../services/samples";
 
 interface Arguments {
   samples: string[];
@@ -13,15 +17,15 @@ interface Arguments {
 
 // Function to process a single sample
 async function processSample(sample: TestSample<Task[]>) {
-  logger.info(`--- Processing sample: ${sample} ---`);
+  logger.info(`--- Processing sample: ${sample.sample} ---`);
   const aiPrompt = await readSampleContext(sample);
 
   let aiResult: Task[] = [];
 
-  logger.info(`- Reading context for image: ${sample}`);
+  logger.info(`- Reading context for image`);
   logger.debug({ aiPrompt }, "Image context read");
 
-  logger.info(`- Transforming image to JSON: ${sample}`);
+  logger.info(`- Transforming image to JSON`);
   aiResult = await transformImageToJSON<Task[]>(sample.sampleImageFullPath, {
     withImage: aiPrompt,
   });
@@ -54,11 +58,16 @@ async function runSamples(
 // Function to process all samples based on the provided arguments, including multiple runs
 export async function processSamples(args: Arguments) {
   try {
-    const samples = await Promise.all(
-      args.samples.map(async (sample) =>
-        loadSample<Task[]>(sample, args.samplesGroup)
-      )
-    );
+    let samples: TestSample<Task[]>[];
+    if (args.samples[0] === "all") {
+      samples = await listAllSamplesInGroup<Task[]>(args.samplesGroup);
+    } else {
+      samples = await Promise.all(
+        args.samples.map((sample) =>
+          loadSample<Task[]>(sample, args.samplesGroup)
+        )
+      );
+    }
 
     if (!samples || samples.length === 0) {
       logger.error("No samples found to process.");
