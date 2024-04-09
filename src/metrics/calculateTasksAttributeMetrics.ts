@@ -12,14 +12,6 @@ import {
 import { calculateTitleMetricForTaskPair } from "./attributes/title";
 import { matchTasksByTitleSimilarity } from "./utils";
 
-export const attributeWeights: Record<MetricAttribute, number> = {
-  date: 3, // Highest weight
-  fromTime: 3, // Highest weight
-  toTime: 3, // Highest weight
-  tags: 2, // High weight
-  title: 1, // Default weight
-};
-
 // Function to initialize metrics sums with zeros
 export function initializeMetricsSums(): Record<
   MetricAttribute,
@@ -40,7 +32,6 @@ export function calculateTasksAttributeMetrics(
   attributes: MetricAttribute[]
 ): Record<MetricAttribute, PerformanceMetrics> {
   const metrics = initializeMetricsSums();
-  let totalWeights = 0;
 
   // Match tasks based on title similarity to pair them for comparison
   const { matchedPairs } = matchTasksByTitleSimilarity(
@@ -49,11 +40,6 @@ export function calculateTasksAttributeMetrics(
   );
 
   attributes.forEach((attribute) => {
-    let weightedPrecision = 0;
-    let weightedRecall = 0;
-    let weightedF1Score = 0;
-    const weight = attributeWeights[attribute];
-
     matchedPairs.forEach(([aiTask, expectedTask]) => {
       let attributeMetrics: PerformanceMetrics;
 
@@ -93,22 +79,16 @@ export function calculateTasksAttributeMetrics(
           throw new Error(`Unknown attribute: ${attribute}`);
       }
 
-      // Accumulate weighted metrics
-      weightedPrecision += attributeMetrics.precision * weight;
-      weightedRecall += attributeMetrics.recall * weight;
-      weightedF1Score += attributeMetrics.f1Score * weight;
+      // Accumulate base metrics
+      metrics[attribute].precision += attributeMetrics.precision;
+      metrics[attribute].recall += attributeMetrics.recall;
+      metrics[attribute].f1Score += attributeMetrics.f1Score;
     });
 
-    // Compute the total weight applied across all matched pairs for the attribute
-    const totalAttributeWeight = weight * matchedPairs.length;
-    totalWeights += totalAttributeWeight; // Accumulate total weight for overall metrics calculation
-
-    // Assign averaged metrics to the corresponding attribute
-    metrics[attribute] = {
-      precision: weightedPrecision / totalAttributeWeight,
-      recall: weightedRecall / totalAttributeWeight,
-      f1Score: weightedF1Score / totalAttributeWeight,
-    };
+    // Average the metrics for each attribute
+    metrics[attribute].precision /= matchedPairs.length;
+    metrics[attribute].recall /= matchedPairs.length;
+    metrics[attribute].f1Score /= matchedPairs.length;
   });
 
   return metrics;

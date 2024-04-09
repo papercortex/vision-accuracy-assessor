@@ -1,4 +1,3 @@
-import jsonDiff from "json-diff";
 import { calculateTasksAttributeMetrics } from "../metrics/calculateTasksAttributeMetrics";
 import { calculateWeightedMetrics } from "../metrics/calculateWeightedMetrics";
 import { calculateAggregatedAttributesForMultipleRuns } from "../metrics/calculateAggregatedAttributesForMultipleRuns";
@@ -12,6 +11,7 @@ import { Task } from "../models/task.interface";
 import { loadAllRunDetailsForSample } from "./runDetails";
 import { calculateTaskLevelMetrics } from "../metrics/calculateTaskLevelMetrics";
 import { calculateAverageMetrics } from "../metrics/calculateAverageMetrics";
+import { taskAttributeWeights, taskLevelWeight } from "../metrics/constants";
 
 export async function analyze<T>(
   sample: TestSample<T>
@@ -43,23 +43,16 @@ export async function analyze<T>(
       expectedResponse
     );
 
-    if (taskLevelMetrics.f1Score < 1) {
-      console.log("==================");
-      console.log(sample.sample, timestamp);
-      console.log({
-        aiResponseLength: aiResponse.length,
-        expectedResponseLength: expectedResponse.length,
-        taskLevelMetrics,
-      });
-      console.log(jsonDiff.diffString(aiResponse, expectedResponse));
-      console.log("==================");
-    }
-
     acc[timestamp] = {
       details: run,
       attributeMetrics,
       taskLevelMetrics,
-      weightedAggregateMetrics: calculateWeightedMetrics(attributeMetrics),
+      weightedAggregateMetrics: calculateWeightedMetrics(
+        attributeMetrics,
+        taskAttributeWeights,
+        taskLevelMetrics,
+        taskLevelWeight
+      ),
     };
     return acc;
   }, {} as Record<string, SampleRunAnalysis<T>>);
@@ -71,8 +64,8 @@ export async function analyze<T>(
     sample: sample.sample,
     sampleGroup: sample.sampleGroup,
     runs: analyzedRuns,
-    overallWeightedMetrics: calculateWeightedMetrics(
-      aggregatedAttributesMetrics
+    overallWeightedMetrics: calculateAverageMetrics(
+      Object.values(analyzedRuns).map((run) => run.weightedAggregateMetrics)
     ),
     averageAttributeMetrics: aggregatedAttributesMetrics,
     overallTaskLevelMetrics: calculateAverageMetrics(

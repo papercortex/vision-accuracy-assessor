@@ -13,13 +13,13 @@ export function getMultipleSamplesTablePerMetric<T>(
     head: [
       "Sample",
       "#Runs",
+      "List",
       "title",
       "tags",
       "date",
       "fromTime",
       "toTime",
       "Weighted Avg.",
-      "Task Level",
     ],
   });
 
@@ -27,6 +27,9 @@ export function getMultipleSamplesTablePerMetric<T>(
     const sampleRow = [
       sampleAnalysis.sample,
       Object.keys(sampleAnalysis.runs).length.toString(),
+      renderMetricValue(
+        sampleAnalysis.overallTaskLevelMetrics[metricAttribute]
+      ),
       renderMetricValue(
         sampleAnalysis.averageAttributeMetrics.title[metricAttribute]
       ),
@@ -43,9 +46,6 @@ export function getMultipleSamplesTablePerMetric<T>(
         sampleAnalysis.averageAttributeMetrics.toTime[metricAttribute]
       ),
       renderMetricValue(sampleAnalysis.overallWeightedMetrics[metricAttribute]),
-      renderMetricValue(
-        sampleAnalysis.overallTaskLevelMetrics[metricAttribute]
-      ),
     ];
 
     table.push(sampleRow);
@@ -76,7 +76,7 @@ export function getRunAttributeMetricsTable<T>(
 
   // Overall Metrics
   table.push([
-    "Overall",
+    "Weighted Avg.",
     renderMetricValue(runAnalysis.weightedAggregateMetrics.precision),
     renderMetricValue(runAnalysis.weightedAggregateMetrics.recall),
     renderMetricValue(runAnalysis.weightedAggregateMetrics.f1Score),
