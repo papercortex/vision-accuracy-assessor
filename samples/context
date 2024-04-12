@@ -13,7 +13,7 @@ const taskSchema = {
     tags: { type: "array", items: { type: "string" } }, // Extract from brackets
     subTasks: { type: "array", items: { type: "string" } }, // Optional, inferred from context
   },
-  required: ["title"],
+  required: ["title", "fromTime", "toTime"],
   additionalProperties: false,
 };
 ```
@@ -23,9 +23,4 @@ const taskSchema = {
 - Date: Use the date depicted in the image. If none is provided, assume the current year is 2024.
 - Tags: Include only if explicitly mentioned within brackets.
 - SubTasks: List as subtasks any items that are clearly part of a larger task but are detailed separately.
-
-Other Rules for interpretation:
-
-- If there's a time conflict, use sub tasks.
-- Tags are the text between brackets if exists only.
-- We are currently in the year 2024.
+- Use your reasoning and make fair assumptions to fill in all required fields.

@@ -48,7 +48,6 @@ async function runSamples(
 ): Promise<void[]> {
   logger.info(`--- Starting run ${run} for all samples ---`);
   const samplePromises = samples.map(async (sample) => {
-    logger.info(`Processing sample: ${sample} for run ${run}`);
     await processSample(sample);
   });
 

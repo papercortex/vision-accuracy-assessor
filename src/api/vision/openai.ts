@@ -32,7 +32,7 @@ export async function transformImageToJSON<T>(
   const image = await fs.readFile(imagePath);
   const base64Image = image.toString("base64");
   const response = await openai.chat.completions.create({
-    model: "gpt-4-vision-preview",
+    model: "gpt-4-turbo-2024-04-09",
     messages: [
       {
         role: "user",

@@ -1,0 +1,71 @@
+{
+  "sample": "2024-03-02",
+  "sampleGroup": "software_engineer",
+  "prompt": "# Requirements\n\nYour task is to analyze an image of handwritten notes and extract tasks into a JSON array. Each task should be structured following the schema provided below:\n\n```js\nconst taskSchema = {\n  type: \"object\",\n  properties: {\n    title: { type: \"string\" },\n    date: { type: \"string\", format: \"date\" }, // e.g. 2024-10-27\n    fromTime: { type: \"string\" }, // e.g. 08:45\n    toTime: { type: \"string\" },\n    tags: { type: \"array\", items: { type: \"string\" } }, // Extract from brackets\n    subTasks: { type: \"array\", items: { type: \"string\" } }, // Optional, inferred from context\n  },\n  required: [\"title\", \"fromTime\", \"toTime\"],\n  additionalProperties: false,\n};\n```\n\n# Interpretation Guidelines\n\n- Date: Use the date depicted in the image. If none is provided, assume the current year is 2024.\n- Tags: Include only if explicitly mentioned within brackets.\n- SubTasks: List as subtasks any items that are clearly part of a larger task but are detailed separately.\n- Use your reasoning and make fair assumptions to fill in all required fields.\n\n# Personal and Project Context\n\nThe planner, Kareem is a software engineer. He has a son (Younes) and a daugther (Roqyia) and his wife is Asmaa.\n\nKareem is currently involved in:\n\n- SRE Learning on KodeKloud (tag: KodeKloud)\n- PaperCortex project development (tag: PaperCortex)\n- PaperCortex youtube series creation (tag: PaperCortex YT)\n- Presenter app that takes slides from reMarkable and present it with animations. (tag: Presenter)\n- KESC: Software Consultancy Agency (tag: KESC)\n\nConsider these tags when they correspond with the tasks mentioned in the notes.\n",
+  "aiJson": [
+    {
+      "title": "Exercise",
+      "date": "2024-03-02",
+      "fromTime": "08:00",
+      "toTime": "09:00",
+      "tags": [
+        "Recreation"
+      ]
+    },
+    {
+      "title": "YT Part 2: Brainstorm",
+      "date": "2024-03-02",
+      "fromTime": "09:00",
+      "toTime": "10:00",
+      "tags": [
+        "PaperCortex"
+      ]
+    },
+    {
+      "title": "Popup Animations",
+      "date": "2024-03-02",
+      "fromTime": "11:00",
+      "toTime": "12:00",
+      "tags": [
+        "Presenter"
+      ]
+    },
+    {
+      "title": "YT Part 2: Slide Draft",
+      "date": "2024-03-02",
+      "fromTime": "10:00",
+      "toTime": "11:00",
+      "tags": [
+        "PaperCortex"
+      ]
+    },
+    {
+      "title": "YT Part 2: Slide Finale",
+      "date": "2024-03-02",
+      "fromTime": "13:00",
+      "toTime": "14:00",
+      "tags": [
+        "PaperCortex"
+      ]
+    },
+    {
+      "title": "Dinner with Younes",
+      "date": "2024-03-02",
+      "fromTime": "17:00",
+      "toTime": "18:00",
+      "tags": [],
+      "subTasks": [
+        "Pick Younes up at 4 PM"
+      ]
+    },
+    {
+      "title": "YT Part 2: Script Draft",
+      "date": "2024-03-02",
+      "fromTime": "19:00",
+      "toTime": "20:00",
+      "tags": [
+        "PaperCortex"
+      ]
+    }
+  ]
+}
